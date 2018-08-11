@@ -71,8 +71,9 @@ CLAIMED BY:
 Everything you never thought you wanted to know about $FEATURE
 -----------------------------------------------------------------------
 CLAIMED BY:
-I think like :g is a great thing to do this on, but I am sure there are
+- I think like :g is a great thing to do this on, but I am sure there are
 lots of other things.
+- Marks could be another good one (romainl has cool automarks)
 ...
 
 Let me talk to you about my convoluted way to become a Vimmer
@@ -116,3 +117,25 @@ tidbits in it.
 Bulk Refactoring using bufdo, argdo (maybe doline, dofile)
 -----------------------------------------------------------------------
 CLAIMED BY:
+...
+
+Why you don't need more than one cursor
+-----------------------------------------------------------------------
+CLAIMED BY:
+Lots of editors are making multiple cursors are core feature, explain
+why vim doesn't need them.
+
+The insane power of vim's regexps
+-----------------------------------------------------------------------
+CLAIMED BY:
+...
+
+The power of vims built-in lists
+-----------------------------------------------------------------------
+CLAIMED BY:
+...
+
+From zero to sixty with ${PLUGIN}
+-----------------------------------------------------------------------
+CLAIMED BY:
+...
