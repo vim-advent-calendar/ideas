@@ -165,3 +165,9 @@ From zero to sixty with ${PLUGIN}
 CLAIMED BY:
 
 ...
+
+Vim sucks, but you should use it anyway
+-----------------------------------------------------------------------
+CLAIMED BY: robertmeta
+
+see robertmeta-vim-sucks.md
