@@ -68,13 +68,14 @@ Listing valuable resources (and explaining why they are valuable)
 CLAIMED BY:
 ...
 
-Everything you never thought you wanted to know about $FEATURE
+Everything you never thought you wanted to know about tags
 -----------------------------------------------------------------------
-CLAIMED BY:
-- I think like :g is a great thing to do this on, but I am sure there are
-lots of other things.
-- Marks could be another good one (romainl has cool automarks)
-...
+CLAIMED BY: djmoch
+- Introduction to tags in Vim
+- Introduction to exuberant ctags
+- Manually generating tags files
+- Automatically generating tags files (git hooks, plugins, etc.)
+- Tag completion (or, why you don't need jedi plugins)
 
 Let me talk to you about my convoluted way to become a Vimmer
 -----------------------------------------------------------------------
