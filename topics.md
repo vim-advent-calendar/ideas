@@ -38,6 +38,19 @@ CLAIMED BY:
 
 ...
 
+How to integrate Vim with your dev environment
+-----------------------------------------------------------------------
+CLAIMED BY: igemnace
+
+Dev workflows vary from person to person, although they do share some
+common tasks such as kicking off build processes, linting, formatting,
+testing, running code, etc. This article will talk about integrating
+these tasks into Vim.
+
+See igemnace-road-to-integration.md.
+
+...
+
 Using Vim for weird things (music, statistical analysis, painting...)
 -----------------------------------------------------------------------
 CLAIMED BY:
