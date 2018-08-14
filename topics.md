@@ -190,3 +190,9 @@ One Vim, why you should just use one instance
 CLAIMED BY: justone
 
 see justone-one-vim.md
+
+Symbols, not files
+-----------------------------------------------------------------------
+CLAIMED BY: romainl
+
+see romainl-symbols-not-files.md
