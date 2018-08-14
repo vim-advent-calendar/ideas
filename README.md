@@ -13,5 +13,5 @@ feedback.
 
  - Techincal content will be under an MIT license, source code, etc
  - Article content will be contributed under a CC 4.0 license, please
- add a CC 4.0 link to the bottom are you article and your attribution
- information: https://creativecommons.org/licenses/by/4.0/.
+ add a CC 4.0 link to the bottom of your article:
+ https://creativecommons.org/licenses/by/4.0/.
