@@ -195,4 +195,4 @@ Symbols, not files
 -----------------------------------------------------------------------
 CLAIMED BY: romainl
 
-see romainl-symbols-not-files.md
+see romainl-death-by-a-thousand-files.md
