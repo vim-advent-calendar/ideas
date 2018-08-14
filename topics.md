@@ -184,3 +184,9 @@ Vim sucks, but you should use it anyway
 CLAIMED BY: robertmeta
 
 see robertmeta-vim-sucks.md
+
+One Vim, why you should just use one instance
+-----------------------------------------------------------------------
+CLAIMED BY: justone
+
+see justone-one-vim.md
