@@ -196,3 +196,9 @@ Symbols, not files
 CLAIMED BY: romainl
 
 see romainl-death-by-a-thousand-files.md
+
+Formating with Vim
+-----------------------------------------------------------------------
+CLAIMED BY: george-b
+
+see george-b-formatting-with-vim.md
