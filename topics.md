@@ -202,3 +202,9 @@ Formating with Vim
 CLAIMED BY: george-b
 
 see george-b-formatting-with-vim.md
+
+From .vimrc to .vim
+-----------------------------------------------------------------------
+CLAIMED BY: tejr
+
+see tejr-from-vimrc-to-vim.md
