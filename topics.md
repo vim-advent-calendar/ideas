@@ -208,3 +208,10 @@ From .vimrc to .vim
 CLAIMED BY: tejr
 
 see tejr-from-vimrc-to-vim.md
+
+Vim History and Evolution
+-----------------------------------------------------------------------
+CLAIMED BY: rossijonas
+
+- I'm thinking about telling the story behind vim's creation and the evoluiton, ispired by [this article](https://thenewstack.io/a-look-at-vim-a-text-editor-for-the-ages/) from David Cassel, and [this video](https://www.youtube.com/watch?v=ayc_qpB-93o) from Bram.
+
