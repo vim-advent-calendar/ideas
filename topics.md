@@ -215,3 +215,9 @@ CLAIMED BY: rossijonas
 
 - I'm thinking about telling the story behind vim's creation and the evoluiton, ispired by [this article](https://thenewstack.io/a-look-at-vim-a-text-editor-for-the-ages/) from David Cassel, and [this video](https://www.youtube.com/watch?v=ayc_qpB-93o) from Bram.
 
+Colorschemes Best Practices
+------------------------------------------------------------------------
+CLAIMED BY: legendre6891
+
+- I'm thinking about writing a short HOWTO on creating colorschemes, focusing on best practices
+and techniques to ensure the colorschemes works across terminals.
