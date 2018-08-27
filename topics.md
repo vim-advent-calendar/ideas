@@ -28,9 +28,9 @@ CLAIMED BY:
 
 The 3% of Vim you need, skip the rest
 -----------------------------------------------------------------------
-CLAIMED BY:
+CLAIMED BY: robertmeta
 
-...
+see robertmeta-the-three-percent.md.
 
 How to integrate Vim with its environment
 -----------------------------------------------------------------------
@@ -178,12 +178,6 @@ From zero to sixty with ${PLUGIN}
 CLAIMED BY:
 
 ...
-
-Vim sucks, but you should use it anyway
------------------------------------------------------------------------
-CLAIMED BY: robertmeta
-
-see robertmeta-vim-sucks.md
 
 One Vim, why you should just use one instance
 -----------------------------------------------------------------------
