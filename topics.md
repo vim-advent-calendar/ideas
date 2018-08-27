@@ -215,3 +215,9 @@ CLAIMED BY: legendre6891
 
 - I'm thinking about writing a short HOWTO on creating colorschemes, focusing on best practices
 and techniques to ensure the colorschemes works across terminals.
+
+if_pyth (= the python interface) cookbook
+------------------------------------------------------------------------
+CLAIMED BY: shlomif
+
+- some common tasks and how to achieve them.
