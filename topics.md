@@ -4,25 +4,25 @@ This is just a list of ideas and sort of a "claim sheet".  Feel free to
 list your idea here, list and idea AND claim it, or claim an existing
 idea.  We don't want duplication in our small 24(ish) article run.
 
-Additional even if you aren't doing a topic, feel free to write some 
+Additional even if you aren't doing a topic, feel free to write some
 notes under it that you think are relevant / interesting.
 
 Don't Use Vim
 -----------------------------------------------------------------------
-CLAIMED BY: 
+CLAIMED BY:
 
-This would be a talked about reasons not to use Vim, reasons to use an 
-alternative, etc. 
+This would be a talked about reasons not to use Vim, reasons to use an
+alternative, etc.
 
 Make your setup truly cross-platform
 -----------------------------------------------------------------------
-CLAIMED BY: 
+CLAIMED BY:
 
 ...
 
 The ideal learning path
 -----------------------------------------------------------------------
-CLAIMED BY: 
+CLAIMED BY:
 
 ...
 
@@ -113,7 +113,7 @@ State of the nation
 -----------------------------------------------------------------------
 CLAIMED BY:
 
-There are very few people I would be comfortable with writing this, 
+There are very few people I would be comfortable with writing this,
 justinmk, Bram, a handful of others who are deep enough in the list
 the project.
 
@@ -145,7 +145,7 @@ Vimrc explained
 -----------------------------------------------------------------------
 CLAIMED BY:
 
-Explain a vimrc completely, make it have lots of useful or interesting 
+Explain a vimrc completely, make it have lots of useful or interesting
 tidbits in it.
 
 Bulk Refactoring using bufdo, argdo (maybe doline, dofile)
