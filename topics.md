@@ -1,10 +1,10 @@
 Topic Ideas
 ========================================================================
 This is just a list of ideas and sort of a "claim sheet".  Feel free to
-list your idea here, list and idea AND claim it, or claim an existing
+list your idea here, list an idea AND claim it, or claim an existing
 idea.  We don't want duplication in our small 24(ish) article run.
 
-Additional even if you aren't doing a topic, feel free to write some
+Additionally, even if you aren't doing a topic, feel free to write some
 notes under it that you think are relevant / interesting.
 
 Don't Use Vim
@@ -141,7 +141,7 @@ CLAIMED BY:
 
 ...
 
-Vimrc explained
+A vimrc explained
 -----------------------------------------------------------------------
 CLAIMED BY:
 
@@ -167,7 +167,7 @@ CLAIMED BY:
 
 ...
 
-The power of vims built-in lists
+The power of vim's built-in lists
 -----------------------------------------------------------------------
 CLAIMED BY:
 
@@ -179,35 +179,35 @@ CLAIMED BY:
 
 ...
 
-One Vim, why you should just use one instance
+One Vim, why you should just one instance
 -----------------------------------------------------------------------
 CLAIMED BY: justone
 
-see justone-one-vim.md
+See justone-one-vim.md
 
 Symbols, not files
 -----------------------------------------------------------------------
 CLAIMED BY: romainl
 
-see romainl-death-by-a-thousand-files.md
+See romainl-death-by-a-thousand-files.md
 
 Formating with Vim
 -----------------------------------------------------------------------
 CLAIMED BY: george-b
 
-see george-b-formatting-with-vim.md
+See george-b-formatting-with-vim.md
 
 From .vimrc to .vim
 -----------------------------------------------------------------------
 CLAIMED BY: tejr
 
-see tejr-from-vimrc-to-vim.md
+See tejr-from-vimrc-to-vim.md
 
 Vim History and Evolution
 -----------------------------------------------------------------------
 CLAIMED BY: rossijonas
 
-- I'm thinking about telling the story behind vim's creation and the evoluiton, ispired by [this article](https://thenewstack.io/a-look-at-vim-a-text-editor-for-the-ages/) from David Cassel, and [this video](https://www.youtube.com/watch?v=ayc_qpB-93o) from Bram.
+- I'm thinking about telling the story behind vim's creation and the evolution, inspired by [this article](https://thenewstack.io/a-look-at-vim-a-text-editor-for-the-ages/) from David Cassel, and [this video](https://www.youtube.com/watch?v=ayc_qpB-93o) from Bram.
 
 Colorschemes Best Practices
 ------------------------------------------------------------------------
@@ -220,4 +220,4 @@ if_pyth (= the python interface) cookbook
 ------------------------------------------------------------------------
 CLAIMED BY: shlomif
 
-- some common tasks and how to achieve them.
+- Some common tasks and how to achieve them.
