@@ -179,7 +179,7 @@ CLAIMED BY:
 
 ...
 
-One Vim, why you should just one instance
+One Vim, why you should use just one instance
 -----------------------------------------------------------------------
 CLAIMED BY: justone
 
