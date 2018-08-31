@@ -1,11 +1,35 @@
-The 3% of Vim That Matters
+The 3% You Need To Know
 ========================================================================
+Vim is an amazing editor, and you should take the time to dive deep and 
+learn a lot of the features. This is the 3% of Vim I think you should
+having in your toolbox. This isn't an ideal learning path, this won't 
+start from the beginning, it won't end at the end. It is just the 
+features I find most useful.
 
-Vim is a very 
+:helpgrep (and :help)
+----------------------------------------------------------------------
+Vim has astounding documentation. 3500+ pages of it. Including a 341+
+page user manual (written to be read cover to cover).
 
-I might structure this article towards the end of the run so I can reference 
-the other wonderful articles to do a lot of the heavy lifting.  
+> an undocumented feature is a useless feature
 
-You should know maps, :g, regexp, etc, etc.
+:g and norm
+----------------------------------------------------------------------
 
+:s
+---------------------------------------------------------------------
 
+bufdo, argdo, dofile, doline
+--------------------------------------------------------------------
+
+jumps and lists
+-------------------------------------------------------------------
+
+undotree (or by time)
+-------------------------------------------------------------------
+
+macros
+-------------------------------------------------------------------
+
+registers
+-------------------------------------------------------------------
