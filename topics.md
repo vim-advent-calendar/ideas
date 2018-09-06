@@ -221,3 +221,9 @@ if_pyth (= the python interface) cookbook
 CLAIMED BY: shlomif
 
 - Some common tasks and how to achieve them.
+
+Vim and Git
+------------------------------------------------------------------------
+CLAIMED BY: swalladge
+
+See swalladge-vim-and-git.md
