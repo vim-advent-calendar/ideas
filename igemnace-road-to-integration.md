@@ -22,7 +22,8 @@ Personal notes:
     and other build runners. Might still need new ideas, since there's
     already material out there, e.g. [vimgor's why you don't need
     Syntastic][1]
-  - Formatting, so `gq`, `=`, and related settings
+  - Formatting, so `gq`, `=`, and related settings (Update: taken by a different
+    topic)
   - Running code. Quickly running through an interpreter is fine. Might
     even be able to still take advantage of `:make` for this.
     Interacting with REPLs is trickier. Might merit plugin suggestions
@@ -50,5 +51,17 @@ Personal notes:
     Definitely bumped down to "minor" status for being very specific in
     its use case, but might make for a great point to discuss,
     especially in an "integrating Vim with the dev environment" article.
+
+# Draft
+
+## Introduction
+
+## The build process
+
+## Linting and beyond
+
+## Running code
+
+## Integration in its natural habitat
 
 [1]: https://gist.github.com/ajh17/a8f5f194079818b99199
