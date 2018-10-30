@@ -6,19 +6,19 @@ control so I can just clone it on any computer I want my familiar Vim
 experience.
 
 But I use Windows computers and Linux computers. Even within the
-same OS, I might have different dependencies installed for the plugins I try to
+same environment, I might have different dependencies installed for the plugins I try to
 import. Also, from time to time I like to use Neovim too, to try out a few
 unique features.
 
 
 
-OS specific settings
+environment specific settings
 -------------------------------------------------------------------------------
-To make OS specific settings we need to know the OS we are
+To make environment specific settings we need to know the environment we are
 running on.
 We can ask vim directly if it was compiled for Windows, otherwise a system call
-to `uname` will give the running OS. The function below returns a string
-containing the value of the running OS.
+to `uname` will give the running environment. The function below returns a string
+containing the value of the running environment.
 
 ```vimscript
 function! whichEnv() abort
@@ -37,21 +37,24 @@ else if (whichEnv() ==# 'LINUX')
 else if (whichEnv() ==# 'DARWIN')
     " Enable MacOS specific settings/plugins
 else
-    " Probably an error
+    " Other cases I can't think of like MinGW
 endif
 ```
 
 Intermission : system calls optimizations
 -------------------------------------------------------------------------------
-System calls are costly (see the difference in startuptime with or without the
-no-stl-wednesdays plugin which is only a call to `date`); caching the results as
+System calls are costly
+> Make a MWE with or without loading no-stl-wednesdays or any system call in init
+> (see the difference in startuptime with or without the
+> no-stl-wednesdays plugin which is only a call to `date`)
+; caching the results as
 much as possible yields good results. Autoloading probably doesn't change
 anything about startup time : the file will be loaded on each startup because the
 init scripts will call the function. It is just done to namespace my helpers
 functions.
 
 ```vimscript
-" Sets only once the value of g:env to the running OS
+" Sets only once the value of g:env to the running environment
 " from romainl
 " https://gist.github.com/romainl/4df4cde3498fada91032858d7af213c2
 function! myHelpers#setEnv() abort
@@ -77,7 +80,7 @@ for personal use.
 
 Dependencies specific settings
 -------------------------------------------------------------------------------
-Even on the same OS, dependencies might not be fulfilled on all the target
+Even on the same environment, dependencies might not be fulfilled on all the target
 machines.
 
 Vim keeps track of its own feature set and you can always use `has()` to check
