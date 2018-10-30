@@ -16,9 +16,13 @@ alternative, etc.
 
 Make your setup truly cross-platform
 -----------------------------------------------------------------------
-CLAIMED BY:
+CLAIMED BY: gagbo
 
-...
+Tips to be able to clone your version-controlled `.vim` directory on
+any machine you use without having to worry about environment specific
+configuration (or even using vim vs neovim)
+
+see gagbo-truly-cross-platform.md.
 
 The ideal learning path
 -----------------------------------------------------------------------
