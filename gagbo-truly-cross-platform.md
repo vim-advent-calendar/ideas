@@ -30,14 +30,14 @@ function! whichEnv() abort
 endfunction
 
 " Later use in another file
-if (whichEnv() ==# 'WINDOWS')
+if (whichEnv() =~# 'WINDOWS')
     " Enable Windows specific settings/plugins
-else if (whichEnv() ==# 'LINUX')
+else if (whichEnv() =~# 'LINUX')
     " Enable Linux specific settings/plugins
-else if (whichEnv() ==# 'DARWIN')
+else if (whichEnv() =~# 'DARWIN')
     " Enable MacOS specific settings/plugins
 else
-    " Other cases I can't think of like MinGW
+    " Other cases I can't think of like MINGW
 endif
 ```
 
