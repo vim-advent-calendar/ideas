@@ -138,3 +138,5 @@ You can see a few of those principles applied on my [current
 repo](https://framagit.org/gagbo/vim-setup). Be warned that it is still a little
 bit messy, because tidying all the files and plugins is very low priority on my
 TODO list.
+
+[license link to CC 4.0](https://creativecommons.org/licenses/by/4.0/)
