@@ -1,0 +1,1 @@
+vim --noplugin -u {syscall_vimrc, NONE} --startuptime {startup_syscall,startup_no_syscall}
