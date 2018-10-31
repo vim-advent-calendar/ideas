@@ -56,6 +56,21 @@ Personal notes:
 
 ## Introduction
 
+> The Fifth is lacking in the monk Wangohan. 
+> If asked to hunt a deer for supper, 
+> he will choose the shuriken against all objections, 
+> and chase a bleeding deer for thirty days.
+>
+> - [Inaction Hero, The Codeless Code][case206-quote]
+ 
+How many times have you seen Vim compared to an IDE? For the practical software
+engineer, it's a comparison that definitely merits some thought. After all,
+tools should be chosen with a critical mindset. ((FIXME: Empty trash. This
+should never hit master. What point am I *really* trying to make?))
+
+((FIXME: For the life of me I can't figure out a good intro flow to segue into
+"Road to Integration" and what it stands for.))
+
 ## The build process
 
 ## Linting and beyond
@@ -65,3 +80,4 @@ Personal notes:
 ## Integration in its natural habitat
 
 [1]: https://gist.github.com/ajh17/a8f5f194079818b99199
+[case206-quote]: http://thecodelesscode.com/case/206
