@@ -112,12 +112,16 @@ else
 endif
 ```
 
+> For romainl : vim has "has(osx)" and even "has(osx_darwin)", why not
+> use those ?
+
+also,
 > Should I speak about autoload or just leave it as an advanced feature ?
 > Basically the solution boils down to autoloading or leaking the function
 > in the global namespace.
 Autoloading here doesn't change
 anything about startup time : the file will be loaded on each startup because the
-init scripts will call the function. It is just done to namespace my helpers
+init scripts will call the function. It is just done to namespace my helper
 functions.
 
 Host specific settings
@@ -161,8 +165,8 @@ can directly use vimscript to know if Vim has a feature or not, using the
 See `:h has()` for all the features you can test for
 directly within vim.
 ```vim
-if has('balloon_eval')
-" Do mouse tooltip-related stuff here
+if has('cscope')
+" Enable all the plugins or change settings to use cscope support
 endif
 ```
 
@@ -174,6 +178,7 @@ before with a vimrc which only include an `executable()` call :
 ```vim
 if executable('rg')
     let g:string_date = 'dummy string'
+    " usually the line here is set grepprg=rg\ --vimgrep
 endif
 ```
 
@@ -257,4 +262,5 @@ things about how to further smooth my truly cross platform setup.
 
 Gerry
 
-[license link to CC 4.0](https://creativecommons.org/licenses/by/4.0/)
+This article is licensed under
+[Creative Commons v4.0](https://creativecommons.org/licenses/by/4.0/)
