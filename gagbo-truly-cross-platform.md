@@ -45,6 +45,12 @@ else
 endif
 ```
 
+Note that vim also has so-called *features* (the arguments in the `has`
+function) for checking respectively `'osx'` and '`osx_darwin`', but after having
+speaken with a MacOS user (I don't use it personnally), there seems to be cases
+where using these flags for MacOS detection is not working as
+[one would guess](https://github.com/vim-advent-calendar/ideas/pull/12#issuecomment-435005197).
+
 Intermission : external shell calls optimizations
 -------------------------------------------------------------------------------
 External shell calls are costly, mostly because of the context switching they
@@ -80,10 +86,16 @@ environment. The result of `system` is stored in a global variable and used
 in all scripts.
 
 ```vim
+"""""""""""""""""""""""""""""
+"        vimrc              "
+"""""""""""""""""""""""""""""
+
+" The function needs to be near the top since it has to be known for later use
+
 " Sets only once the value of g:env to the running environment
 " from romainl
 " https://gist.github.com/romainl/4df4cde3498fada91032858d7af213c2
-function! myHelpers#setEnv() abort
+function! Config_setEnv() abort
     if exists('g:env')
         return
     endif
@@ -100,7 +112,7 @@ endfunction
 
 " I can call this function before every environment specific block with the
 " early return branch.
-call myHelpers#setEnv()
+call Config_setEnv()
 if (g:Env =~# 'WINDOWS')
     " Enable Windows specific settings/plugins
 else if (g:Env =~# 'LINUX')
@@ -112,44 +124,160 @@ else
 endif
 ```
 
-> For romainl : vim has "has(osx)" and even "has(osx_darwin)", why not
-> use those ?
-
-also,
-> Should I speak about autoload or just leave it as an advanced feature ?
-> Basically the solution boils down to autoloading or leaking the function
-> in the global namespace.
-Autoloading here doesn't change
-anything about startup time : the file will be loaded on each startup because the
-init scripts will call the function. It is just done to namespace my helper
-functions.
-
 Host specific settings
 -------------------------------------------------------------------------------
 We can use exactly the same method for host specific settings.
-
-I only use this
-method for Linux, since I have a lot more things installed on my laptop than
-there is on the cluster, where my editing doesn't need half the plugins I use
-for personal use.
-
 Linux provides [hostname](https://linux.die.net/man/1/hostname) so we can use
 the same function as before, replacing only the `toupper...` line with
 `system('hostname')`, and storing it in another `g:` variable like `g:Hostname`.
 
-_*This method may also work on Windows, but not sure*_
+This method should also work on Windows, since it also provides
+[hostname](https://ss64.com/nt/hostname.html), but I have not tested it yet.
+
+In order to show
+how this can be useful I will have to present a little my work environment.
+I am currently a PhD student in computational mechanics, which
+is one heavy user of High Performance Computing
+([HPC](https://en.wikipedia.org/w/index.php?title=High-performance_computing&redirect=no)
+: the laboratory has a Linux-powered
+[cluster](https://en.wikipedia.org/wiki/Computer_cluster) on which all the heavy
+simulations are run. The software we use is written in C++ and we built a DSL to
+communicate input parameters through plain-text files to the software.
+
+This means I need to edit text from multiple places on
+multiple machines for my work :
+
+- I might want to edit files directly on my office Windows machine. This machine
+    is a little beefy and I can use it to test locally developments which need
+    more computational power to be run.
+- I might want to edit files stored on the cluster from my office Windows
+    machine (with ssh). This is useful to work on the code and/or launch tests
+    directly in the correct environment.
+- I might want to edit files stored on the cluster from my laptop running Linux
+    (with ssh). This is useful when I want to change quickly simulation
+    parameters.
+- I might want to edit files directly on my laptop. This is where I work on
+    code the most.
+
+Therefore, I use Vim to edit text in 2 Linux environments (my laptop and the
+front node of the cluster), but I do have specific issues related to the way I
+access the files (either "natively" or through ssh using a Windows client are
+the two extremes). So in the following snippet, I use the "host specific" method
+to disable X server connection when working on the cluster (Putty used to try to
+connect and wait for a timeout, leading to startup times of 3-5 *seconds*), and
+to add the [FZF](https://github.com/junegunn/fzf#as-vim-plugin) directory to the
+runtimepath, since I had to install fzf in my `$HOME` directory on this machine.
+
+```vim
+"""""""""""""""""""""""""""""
+"        vimrc              "
+"""""""""""""""""""""""""""""
+" Sets only once the value of g:host to the output of hostname
+function! Config_setHost() abort
+    if exists('g:Hostname')
+        return
+    endif
+       let g:host = system('hostname')
+endfunction
+
+call Config_setHost()
+if g:Hostname =~? 'front'
+    set clipboard=exclude:.*
+    set runtimepath+=~/.fzf
+endif
+```
 
 Host specific settings are good when you know you're only cloning your `~/.vim`
 directory in a few computers on which you know what is installed. Using this to
 differentiate between 50 hosts means you will need very long if statements which
 get quickly hard to read.
 
-I still find this useful for clipboard
-handling or other purely host-specific settings.
+I still find this useful for clipboard handling or other purely host-specific
+settings.
 
-> I made this a big heading because it felt like a good thing to keep in the
-> TOC of the article, but it's really short in content (it boils down to
-> s/uname/hostname/g && s/g:Env/g:Hostname/g). Should I fuse ?
+**Security note** : as you can see in the last snippet, you have to put the
+hostname in your configuration in order to make these specific settings. This
+information will then be available to anyone who can see your configuration
+files on the internet. If this is an issue (especially regarding version
+control on online git repositories), I think the best thing to do is to :
+- keep these if statements in separate `.vim` files,
+- Move these `.vim` files in a specific folder under `~/.vim` like
+    `host_settings`
+- `runtime` the settings in the version controlled file.
+
+Eventually the configuration looks like this :
+```vim
+""""""""""""""""""""""""""""""
+" vimrc (version-controlled) "
+""""""""""""""""""""""""""""""
+" Sets only once the value of g:host to the output of hostname
+function! Config_setHost() abort
+    if exists('g:Hostname')
+        return
+    endif
+       let g:host = system('hostname')
+endfunction
+
+call Config_setHost()
+runtime host_settings/34.vim
+
+"""""""""""""""""""""""""""""
+"       .gitignore          "
+"""""""""""""""""""""""""""""
+# Ignore the host_settings folder in version control
+host_settings/
+
+" All files below are now private
+"""""""""""""""""""""""""""""
+"   host_settings/34.vim    "
+"""""""""""""""""""""""""""""
+if g:Hostname =~? 'front'
+    set clipboard=exclude:.*
+    set runtimepath+=~/.fzf
+endif
+
+
+```
+
+If all snippets can be run at the same location, you can even use globs to hide
+even file names :
+```vim
+""""""""""""""""""""""""""""""
+" vimrc (version-controlled) "
+""""""""""""""""""""""""""""""
+" Sets only once the value of g:host to the output of hostname
+function! Config_setHost() abort
+    if exists('g:Hostname')
+        return
+    endif
+       let g:host = system('hostname')
+endfunction
+
+call Config_setHost()
+runtime! host_settings/*.vim " Beware of the '!', it is necessary
+
+"""""""""""""""""""""""""""""
+"       .gitignore          "
+"""""""""""""""""""""""""""""
+# Ignore the host_settings folder in version control
+host_settings/
+
+" All files below are now private
+""""""""""""""""""""""""""""""""""""""""
+" host_settings/clipboard_settings.vim "
+""""""""""""""""""""""""""""""""""""""""
+if g:Hostname =~? 'front'
+    set clipboard=exclude:.*
+endif
+
+""""""""""""""""""""""""""""""""""
+" host_settings/fzf_settings.vim "
+""""""""""""""""""""""""""""""""""
+if g:Hostname =~? 'front'
+    set runtimepath+=~/.fzf
+endif
+
+```
 
 Dependencies specific settings
 -------------------------------------------------------------------------------
