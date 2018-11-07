@@ -1,26 +1,67 @@
 # Vim and Git
 
 
-- intro
-- relationship between vim and git
-- this no emacs/magit
+
+It is impossible to lay out a definitive set of rules to follow for working with
+Git from a Vim user's perspective. There are so many workflows and so many
+options for integrating Vim and Git together. If we were talking about an IDE,
+then the easy answer would be to use the IDE's Git integration. But this is Vim,
+where we build our own IDE.
+
+Getting to assemble our own IDE is awesome for several reasons. Firstly,
+developers are unique individuals with unique workflows; building our own means
+the result will be tailor made. Secondly, building an IDE with Vim can follow
+the Unix philosophy of "do one thing and do it well".
+
+This flexibility and power comes with some challenges though. How do you
+decide on the "best" workflow without spending a large amount of time trying
+all the possibilities? How can you find what options are available? How can you
+overcome muscle memory and begin adopting a new workflow?
+
+Hopefully this article will help with the above questions by describing various
+workflows and providing tips for getting the most out of each. Obviously I'm
+only authoritative on my particular workflow (which I believe needs improving),
+so take this as a best effort attempt.
+
+Here goes.
 
 
 ## Workflows
 
+- "vanilla" Vim
+- Tmux
+- Fugitive
+- `¯\_(ツ)_/¯`
+
 
 ### Vanilla
 
+It's possible to have a perfectly legit setup with vanilla Vim, the command line
+Git client, and a terminal. Sometimes this is the only option if you need to
+speedily edit something on a server, virtual machine, or new installation.
 
-`:h autoread` for automatically updating buffers when files changed by git.
+Tips
 
-`<c-z>` to suspend, git in shell, `$ fg` back to editing
+Vim is just a process running inside the shell. We can take advantage of that by
+suspending the process with `<c-z>`. This drops up back to the shell were we can
+run Git commands as required. Then resume Vim and get back to editing by the
+`fg` command.
 
-`!git <args>` from inside vim
 
-newer vim/nvim have `:terminal`
+If checking out different versions of a file in Git while that file, Vim will
+complain about the file being changed externally and prompt for an action to
+take. With `:set autoread`, external changes will be automatically loaded into
+the buffer for a smoother workflow. `u` will undo the change.
 
 
+If you don't want to leave vim, it is simple to run a git command by shelling
+out. For example: `:!git status`. `%` expands to the current filename, so
+something like `:!git log %` will show the commit history of the file open in
+the current buffer.
+
+New Vim and Neovim versions also have an integrated terminal. `:terminal`
+
+TODO
 
 ### Tmux
 
@@ -40,7 +81,8 @@ newer vim/nvim have `:terminal`
 
 ### Fugitive
 
-**The** git plugin.
+**The** git plugin. There are many articles about Fugitive so I won't go into it
+in much detail. Basically, it provides
 
 
 ### Committia
