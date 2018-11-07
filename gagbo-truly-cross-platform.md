@@ -47,7 +47,7 @@ endif
 
 Note that vim also has so-called *features* (the arguments in the `has`
 function) for checking respectively `'osx'` and '`osx_darwin`', but after having
-speaken with a MacOS user (I don't use it personnally), there seems to be cases
+spoken with a MacOS user (I don't use it personnally), there seems to be cases
 where using these flags for MacOS detection is not working as
 [one would guess](https://github.com/vim-advent-calendar/ideas/pull/12#issuecomment-435005197).
 
