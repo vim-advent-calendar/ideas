@@ -73,7 +73,46 @@ should never hit master. What point am I *really* trying to make?))
 
 ## The build process
 
-## Linting and beyond
+Vim has a feature expressly made for kicking off build processes: `:make`. At
+the very least, you can use it to run make:
+
+```vim
+" run make without arguments
+:make
+" build a specific target
+:make server
+```
+
+Very straightforward. But the name can be a bit misleading; you're not limited
+to make for your build process. The `makeprg` setting controls what program
+`:make` starts.
+
+For example, in the frontend Javascript projects I work on, build processes are
+run with NPM scripts:
+
+```vim
+:set makeprg=npm\ run
+
+" run the main build chain
+:make build
+" run a script, e.g. a specific build target
+:make build:docs
+```
+
+Convenient! Though, not *that* convenient right now; it's still not much of a
+departure from just running `npm run build` in your shell. You can map some keys
+to make it faster:
+
+```vim
+nnoremap <F5> :make build<CR>
+```
+
+But by far, the most convincing argument for doing this from Vim is the quickfix
+list.
+
+## Build errors and the quickfix list
+
+## Linting, and beyond
 
 ## Running code
 
