@@ -2,6 +2,7 @@ From `.vimrc` to `.vim`
 =======================
 
 > You can’t have everything. Where would you put it?
+>
 > –Steven Wright
 
 Attack of the 5,000-line vimrc
@@ -417,6 +418,8 @@ well worth the effort.
 If you’d like to see an example of how this layout can end up looking when you
 make it work for you, [the author’s personal `~/.vim` directory is available
 for download][pv].
+
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 [ad]: http://vimhelp.appspot.com/options.txt.html#after-directory
 [ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
