@@ -264,7 +264,7 @@ expose an interface from the plugin file:
       ...
     endfunction
     nnoremap <Plug>StripTrailingWhitespace
-          \ :<C-O>:call <SID>StripTrailingWhitespace()<CR>
+          \ :<C-U>call <SID>StripTrailingWhitespace()<CR>
 
 And then put your choice of mapping to it in your vimrc:
 
