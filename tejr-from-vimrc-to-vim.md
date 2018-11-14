@@ -273,7 +273,7 @@ And then put your choice of mapping to it in your vimrc:
 If someone else wants to use your plugin, this makes choosing their own
 mappings for it a little more straightforward if they don't agree with yours.
 There's more general advice about good mapping practices in writing
-fully-fledged plugin files in [:help write-plugin`][wp].
+fully-fledged plugin files in [`:help write-plugin`][wp].
 
 Not really my `filetype`
 ------------------------
