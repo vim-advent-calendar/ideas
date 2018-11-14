@@ -405,9 +405,9 @@ While Vim does afford the user tremendous power in configuring and customizing,
 there is definitely a **Way of Vim** for the timely loading of relevant
 configuration, and if you learn a little about how it works, you'll fight with
 your editor that much less. When you first learned Vim, do you remember how
-strange using the `hjkl` keys for movement seemed, before it made sense?
-Do you remember how you wanted to stay in insert mode all the time, before
-normal mode made sense?
+strange using the HJKL keys for movement seemed, before it made sense? Do you
+remember how you wanted to stay in insert mode all the time, before normal mode
+made sense?
 
 Working within the Vim runtime file structure instead of ignoring it, fighting
 with it, or trying to reshape it can make your `~/.vim` directory into a
