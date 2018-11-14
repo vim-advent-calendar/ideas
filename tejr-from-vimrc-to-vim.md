@@ -415,8 +415,8 @@ refined toolbox, with a place for everything, and everything in its place. It's
 well worth the effort.
 
 If you'd like to see an example of how this layout can end up looking when you
-make it work for you, [the author's personal ~/.vim directory is available for
-download][pv].
+make it work for you, [the author's personal `~/.vim` directory is available
+for download][pv].
 
 [ad]: http://vimhelp.appspot.com/options.txt.html#after-directory
 [ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
