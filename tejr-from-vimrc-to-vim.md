@@ -88,8 +88,8 @@ thousand files, almost all of them ready to be loaded *only when relevant*. We
 should take a hint from Bram on that!
 
 The directory named in `$VIMRUNTIME` is only the first part of the story. If we
-look at the value of the `'runtimepath'` option in Vim, we can see mentions of
-a few other paths named:
+look at the value of the [`'runtimepath'`][ro] option in Vim, we can see
+mentions of a few other paths named:
 
     :set runtimepath?
       runtimepath=~/.vim,/usr/share/vim/vim80,...
@@ -235,8 +235,8 @@ You can check at the top of the file whether the rest of the file should be
 loaded at all, and use [`:finish`][fn] if it shouldn’t.
 
 For Vim plugin distributions, this is the basis of a lot of guards that check
-for the `'compatible'` option, or a minimum version of Vim, or the availability
-of a feature, or whether the plugin has already been loaded:
+for the [`'compatible'`][co] option, or a minimum version of Vim, or the
+availability of a feature, or whether the plugin has already been loaded:
 
     if &compatible
           \ || v:version < 700
@@ -397,9 +397,9 @@ Be water, my friend
 
 Note that all of the above is just the beginning: we haven’t even touched on
 [lazy-loading functions][al] for speed with definitions in `~/.vim/autoload`,
-or custom [`:compiler`][cm] definitions for setting `'makeprg'` and
-`'errorformat'` in `~/.vim/compiler`: yet more examples of Vim functionality
-that wraps around `:runtime` loading.
+or custom [`:compiler`][cm] definitions for setting [`'makeprg'`][mp] and
+[`'errorformat'`][ef] in `~/.vim/compiler`: yet more examples of Vim
+functionality that wraps around `:runtime` loading.
 
 While Vim does afford the user tremendous power in configuring and customizing,
 there is definitely a **Way of Vim** for the timely loading of relevant
@@ -422,7 +422,9 @@ for download][pv].
 [ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
 [al]: http://vimhelp.appspot.com/eval.txt.html#autoload
 [cm]: http://vimhelp.appspot.com/quickfix.txt.html#%3Acompiler
+[co]: http://vimhelp.appspot.com/options.txt.html#%27compatible%27
 [dc]: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/cbe1fb5b5505e17bd7709669168c367903d94cd4/.vimrc
+[ef]: http://vimhelp.appspot.com/options.txt.html#%27errorformat%27
 [et]: http://vimhelp.appspot.com/options.txt.html#%27expandtab%27
 [fd]: http://vimhelp.appspot.com/filetype.txt.html#ftdetect
 [fn]: http://vimhelp.appspot.com/repeat.txt.html#%3Afinish
@@ -432,9 +434,11 @@ for download][pv].
 [lp]: http://vimhelp.appspot.com/starting.txt.html#load-plugins
 [lt]: http://vimhelp.appspot.com/eval.txt.html#%3Alet
 [mf]: http://vimhelp.appspot.com/syntax.txt.html#mail%2Evim
+[mp]: http://vimhelp.appspot.com/options.txt.html#%27makeprg%27
 [pp]: http://vimhelp.appspot.com/usr_41.txt.html#using-%3CPlug%3E
 [pv]: tejr-from-vimrc-to-vim.zip
 [rc]: http://vimhelp.appspot.com/usr_05.txt.html#05.1
+[ro]: http://vimhelp.appspot.com/options.txt.html#%27runtimepath%27
 [rt]: http://vimhelp.appspot.com/repeat.txt.html#%3Aruntime
 [sc]: http://vimhelp.appspot.com/repeat.txt.html#%3Asource
 [sl]: https://bitbucket.org/sjl/dotfiles/src/e2a961f1d037e53ea2809885a65feba66a9aa03e/vim/vimrc?at=default&fileviewer=file-view-default
