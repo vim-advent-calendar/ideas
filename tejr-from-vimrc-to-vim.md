@@ -280,8 +280,8 @@ Not really my `filetype`
 
 Here's another common pattern often seen in vimrc files; this line of code is
 intended to set the [`'spell'`][sp] option on, but only for buffers of the
-[`mail` filetype][mf], to show possible spelling errors as an email message is
-edited:
+[`mail` filetype][mf], to highlight possible spelling errors as an email
+message is edited:
 
     autocmd Filetype mail setlocal spell
 
