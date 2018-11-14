@@ -26,25 +26,12 @@ are even longer—perhaps yours already is.
 
 The issue with very long vimrc files isn't so much that the amount of
 configuration is in itself excessive—after all, all of that power is there for
-a reason. However, if you've been programming for a while, you know from
-experience that it's good practice to avoid very large files that do a lot of
-disparate things. Since Vim configuration is just code, it's no exception to
-this rule. Instead of a single mammoth configuration file, there's a strong
-case to be made for having a larger set of relatively smaller files that each
-have a role or responsibility—and those files go in `~/.vim`.
-
-Don't worry, this article isn't going to try to push any Vim minimalism on you.
-I'm not going to tell you to junk 90% of your configuration, or that your
-choices of options, plugins, and mappings are bad and wrong. Instead, I want to
-show how you can leverage the logic of Vim's `'runtimepath'`, startup sequence,
-and filetype-switching logic to place your configuration in the *right place*,
-so it loads at the *right time*. I'm hoping to help the Vim community along on
-its slow realization that we should be sharing our `.vim` directories, rather
-than monolithic `.vimrc` files.
-
-We'll learn how to do this by going through lots of specific examples of the
-sort of configuration often found in `.vimrc` files, and show how to place them
-in `~/.vim` in a sensible way.
+a reason. If you've been programming for a while, you know from experience that
+it's good practice to avoid very large files that do a lot of disparate things.
+Since Vim configuration is just code, it's no exception to this rule. Instead
+of a single mammoth configuration file, there's a strong case to be made for
+having a larger set of relatively smaller files that each have a role or
+responsibility—and those files go in `~/.vim`.
 
 Applying a directory hierarchy to replace your mammoth `.vimrc` will not only
 help to keep your configuration manageable, it may also help with keeping Vim
@@ -63,14 +50,14 @@ control over in what order and under what circumstances specific configuration
 is loaded.
 
 Let's start by looking at the structure of the runtime files that come with Vim
-itself. You can find the location of this directory in the `$VIMRUNTIME`
-variable:
+itself. You can find the path for this directory in the `$VIMRUNTIME` variable:
 
     :echo $VIMRUNTIME
 
 If you're using the version of Vim that was packaged with your operating
-system, it will very likely be something like `/usr/share/vim/vim80`. Let's
-take a look at the contents of that directory:
+system, it will very likely be something like `/usr/share/vim/vim80`.
+
+Let's take a look at the contents of that directory:
 
     $ ls /usr/share/vim/vim80
     autoload/     bugreport.vim      colors/             compiler/
@@ -89,16 +76,18 @@ files:
     $ find /usr/share/vim/vim80 -type f | wc -l
     1600
 
-Of those, 1,291 are just .vim files:
+Of those, 1,291 are `.vim` files:
 
     $ find /usr/share/vim/vim80 -type f -name \*.vim | wc -l
+    1291
 
-All of these files are just plain Vim script files, like your vimrc, to be
-loaded under some set of conditions, depending on location. Only a small
-fraction of them will actually be run on Vim startup. Over a thousand files,
-almost all of them ready to be loaded *only when relevant*.
+All of these are just plain Vim script files, like your vimrc, to be loaded
+under some set of conditions, depending on location within this directory. Only
+a small fraction of them will actually be run on Vim startup. That's over a
+thousand files, almost all of them ready to be loaded *only when relevant*. We
+should take a hint from Bram on that!
 
-However, the directory named in `$VIMRUNTIME` is only part of the story. If we
+The directory named in `$VIMRUNTIME` is only the first part of the story. If we
 look at the value of the `'runtimepath'` option in Vim, we can see mentions of
 a few other paths named:
 
@@ -117,36 +106,42 @@ If you've worked with Vim script for a while, you probably know how to use the
 some lines like this in your vimrc, to load a separate file with something like
 mapping definitions in it:
 
-    :source ~/.vim/mappings.vim
+    source ~/.vim/mappings.vim
 
 Vim offers another method for loading these files that works with the file
-layout of the `'runtimepath'`, named [`:runtime`][rc]. Without an exclamation
-mark, it reads Vim script commands from the first path it finds in any of its
-`'runtimepath'` entries. With an exclamation mark, it reads *all* of them.
-`:runtime` also doesn't raise errors if it can't find the file, avoiding a lot
-of boilerplate.
+layout of the `'runtimepath'` we just inspected, named [`:runtime`][rc]. Used
+without an exclamation mark, it reads Vim script commands from the first path
+it finds in any of its `'runtimepath'` entries. With an exclamation mark, it
+reads *all* of them, including pattern matching with `?` and `*` globs.
 
-    :runtime syntax/c.vim
-    :runtime! syntax/c.vim
-    :runtime! */maps.vim
-    :runtime! */**/maps.vim
+    runtime syntax/c.vim
+    runtime! syntax/c.vim
+    runtime! */maps.vim
+    runtime! **/maps.vim
 
 The [double asterisk][ss] in the last example here can be taken as a shorthand
-for a directory hierarchy, which can be up to 100 levels deep.
+for a directory hierarchy, which can be up to 100 levels deep. This means that
+a file in `foo/bar/baz/quux/maps.vim` would still be found and loaded.
+
+Unlike `:source`, `:runtime` also doesn't raise errors if it can't find the
+file, avoiding a lot of boilerplate if a file's absence in a particular
+directory may be normal.
 
 A few of Vim's startup processes—and some of its commands, like
-[`:filetype`][ft]—are in fact just thin wrappers around a set of `:runtime`
-commands. This allows a lot of flexibility in choosing what files to run and
+[`:filetype`][ft]—are in fact just thin wrappers around `:runtime` commands.
+Leveraging this allows a lot of flexibility in choosing what files to run and
 where, based on what's available in these paths; with a little care, we can run
-code before, instead of, or after other code to adapt, replace, or extend it.
+code before, instead of, or after other code, in order to disable, replace, or
+extend it.
 
 Turn on, `plugin`, drop out
 ---------------------------
 
-Let's start the process of leveraging this power to divide up your vimrc file
-by looking for blocks of self-contained code that are veering away from simple
+You can start the process of breaking up the code in your vimrc file by looking
+for blocks of self-contained code that are veering away from simple
 configuration of the editor's existing functions, and more into dedicated
-programs of their own, so we can put them into the `plugin` subdirectory.
+programs of their own, so we can put them into self-contained file in the
+`plugin` subdirectory.
 
 As a common example, if you've been reading others' vimrc files, you will have
 doubtless seen many attempts to solve the universal problem of quickly removing
@@ -165,16 +160,27 @@ do so is from the [Vim Tips wiki][vs]:
 
 It's usually followed by a mapping of some sort to actually call the function:
 
-    nnoremap \x :<C-U>call StripTrailingWhitespace()<CR>
+    nnoremap <Leader>x :<C-U>call StripTrailingWhitespace()<CR>
 
-Functions like the above don't need to be loaded every time vimrc is sourced.
-Once defined, they can just sit there, ready for invocation when appropriate.
-Instead of putting the function definition in `~/.vimrc`, drop it into
+Functions like the one above don't need to be loaded every time vimrc is
+sourced. Once defined, they can just sit there, ready for invocation when
+appropriate. In fact, for the function above, Vim throws an error if we attempt
+to reload our `~/.vimrc`, because it doesn't like the re-definition. We could
+fix that by declaring the function with `function!`, but there's another way:
+instead of putting the function definition in `~/.vimrc`, drop it into
 `~/.vim/plugin` with a `.vim` extension, for example as
 `~/.vim/plugin/strip_trailing_whitespace.vim`.
 
 Once installed and Vim is restarted, we can confirm our plugin was loaded by
-checking it's included in the output of [`:scriptnames`][sn].
+checking it's included in the output of [`:scriptnames`][sn]:
+
+    :scriptnames
+    ...
+    10: ~/.vim/plugin/strip_trailing_whitespace.vim
+    ...
+
+Note that the `<Leader>x` mapping left in your ~/.vimrc still works just fine,
+too, despite being loaded *before* the function was defined.
 
 ### What's a plugin, anyway?
 
@@ -183,11 +189,6 @@ just a single function. To Vim, that's not a meaningful distinction—as
 described in [`:help load-plugins`][lp], it loads all the `*.vim` files it can
 in the `plugins` subdirectory of each of the directories in `'runtimepath'`. It
 makes no difference to Vim what Vim script those files actually contain.
-
-The plugin files are also only loaded during Vim's actual startup, not when
-your vimrc is sourced. If you have a mapping to reload your vimrc, putting
-heavier blocks of code in `~/.vim/plugin` can avoid re-running them
-unnecessarily.
 
 A plugin file doesn't have to be functions, either. A set of related
 abbreviations? Custom commands? Code dependent on one particular machine or
@@ -204,8 +205,9 @@ recursively, you can organize them in subdirectories if you want to:
     ~/.vim/plugin/whitespace/squeeze.vim
     ~/.vim/plugin/whitespace/trim.vim
 
-The clue here to how this works is in the command that `:help load-plugins`
-suggests as the analogue to what it does internally:
+Remember how we mentioned Vim's thinly-veiled `:runtime` wrappers? This is one
+of them. The clue here to how this works is in the command that `:help
+load-plugins` suggests as an analogue to what it does internally:
 
     :runtime! plugin/**/*.vim
 
@@ -220,18 +222,21 @@ some other advantages. For one thing, you can use Vim's [script-variable][sv]
       ...
     endfunction
 
-This means you don't have to worry about trampling on any other variables
-defined in your vimrc file; the code is better scoped and self-contained.
+This apples a unique numeric prefix to all of your function names and variable
+names, which means you don't have to worry about trampling on any other
+variables defined in your vimrc file; the code is better scoped and
+self-contained.
 
 ### Short-circuiting and load guards
 
-Another advantage of separate plugin files is the ability to short-circuit any
-given script, to prevent it from loading if it's not appropriate to do so. You
-can check at the top of the file whether the rest of the file should be loaded
-at all, and use [`:finish`][fn] if it shouldn't; this is the basis of a lot of
-guards that check for the `'compatible'` option, or a minimum version of Vim,
-or the availability of a feature, or whether the plugin has already been
-loaded:
+Another advantage of separate plugin files is the ability to **short-circuit**
+any given script—to prevent it from loading if it's not appropriate to do so.
+You can check at the top of the file whether the rest of the file should be
+loaded at all, and use [`:finish`][fn] if it shouldn't.
+
+For Vim plugin distributions, this is the basis of a lot of guards that check
+for the `'compatible'` option, or a minimum version of Vim, or the availability
+of a feature, or whether the plugin has already been loaded:
 
     if &compatible
           \ || v:version < 700
@@ -241,14 +246,15 @@ loaded:
     endif
     let g:loaded_myplugin = 1
 
-Now you don't have to wrap the whole thing in a single `:if` block.
+Now you don't have to wrap the whole thing in a single `:if` block in your
+vimrc.
 
 ### The question of mappings
 
 Should you include a mapping that uses a defined function in the plugin itself?
 Good question; it's up to you, and your plans for the plugin, but I like to
-think of vimrc as where the user-level choices go, and mappings would fall in
-that category.
+think of vimrc as where the user-level choices go, and plugins where the code
+they call should go, and mappings would fall into the former category.
 
 If you want to be thorough, and to keep some abstraction between what the
 plugin does and how it's called, you can use [`<Plug>` prefix][pp] mappings to
@@ -260,21 +266,22 @@ expose an interface from the plugin file:
     nnoremap <Plug>StripTrailingWhitespace
           \ :<C-O>:call <SID>StripTrailingWhitespace()<CR>
 
-And then put your choice of mapping to it in your .vimrc:
+And then put your choice of mapping to it in your vimrc:
 
-    nmap \x <Plug>StripTrailingWhitespace
+    nmap <Leader>x <Plug>StripTrailingWhitespace
 
 If someone else wants to use your plugin, this makes choosing their own
 mappings for it a little more straightforward if they don't agree with yours.
-There's more general advice about writing fully-fledged plugin files in [:help
-write-plugin`][wp].
+There's more general advice about good mapping practices in writing
+fully-fledged plugin files in [:help write-plugin`][wp].
 
 Not really my `filetype`
 ------------------------
 
 Here's another common pattern often seen in vimrc files; this line of code is
 intended to set the [`'spell'`][sp] option on, but only for buffers of the
-[`mail` filetype][mf]:
+[`mail` filetype][mf], to show possible spelling errors as an email message is
+edited:
 
     autocmd Filetype mail setlocal spell
 
@@ -287,17 +294,18 @@ definitions for the same hook:
       autocmd mail setlocal spell
     augroup END
 
-The second is that this hook is set up every time vimrc is loaded, regardless
-of whether a mail file is being edited. It makes more sense to put this into a
-[filetype plugin][fp].
+However, we can avoid this boilerplate. The second thing to note is that this
+hook is set up every time vimrc is loaded, *regardless* of whether a mail file
+is actually edited in that session. It makes more sense to put this into a
+[filetype plugin][fp] or **ftplugin**.
 
 A file placed in `~/.vim/ftplugin/mail.vim` will be detected and run whenever a
-new buffer's filetype is set to `mail`. This is set up by the long
-`filetype.vim` file in the Vim runtime when activated by `filetype plugin on`.
-The hooks do a lot of work to detect the type of any given file, and to run the
-appropriate filetype plugins, so there's no need for the `autocmd` hooks here;
-we already have hooks loaded, and a place to put the definition, so we can just
-put this single line in there:
+new buffer's filetype is set to `mail`. The hooks that do this are set up by
+the long `filetype.vim` file in your `$VIMRUNTIME` Vim runtime when activated
+by `filetype plugin on`. They do a lot of work to detect the type of any given
+file, and to run the appropriate filetype plugins, so there's no need for the
+`autocmd` hooks here; we already have hooks loaded, and a place to put the
+definition, so we can just put this single line in there:
 
     setlocal spell
 
@@ -306,18 +314,23 @@ that our file was loaded when the filetype was chosen:
 
     :set filetype=mail
     :scriptnames
+    ...
+    20: ~/.vim/ftplugin/mail.vim
+    ...
+    :set spell?
+      spell
 
-We can improve this even further.
+We can improve this still further.
 
 ### Loading filetype code afterwards
 
 Rather than putting our option setting in `~/.vim/ftplugin/mail.vim`, we'll put
-it in `~/.vim/after/ftplugin/mail.vim`. The [after directory][ad] is run
-*after* the runtime files included in Vim, so with this path, we can ensure
-that our option is set *after* the main mail filetype plugin at
-`$VIMRUNTIME/ftplugin/mail.vim` has completed whatever it does. This makes it
-more straightforward to *override* what a filetype plugin configures if you
-disagree with it.
+it in `~/.vim/after/ftplugin/mail.vim`—note the extra `after` level. The [after
+directory][ad] is run *after* the runtime files included in Vim, so with this
+path, we can ensure that our option is set *after* any main mail filetype
+plugin at `$VIMRUNTIME/ftplugin/mail.vim` has completed whatever it does. This
+makes it more straightforward to *override* what a filetype plugin configures
+if you happen to disagree with it.
 
 If you want to make this even more granular, you can also put files in
 *subdirectories* named after the filetype:
@@ -330,13 +343,17 @@ The filetype followed by an underscore and then a script name works, too:
     ~/.vim/after/ftplugin/mail_spell.vim
     ~/.vim/after/ftplugin/mail_quote.vim
 
+This is another `:runtime` analogue on Vim's part; it's like we ran this:
+
+    :runtime! ftplugin/mail.vim ftplugin/mail_*.vim ftplugin/mail/*.vim
+
 ### Undoing filetype settings
 
 If the filetype of the buffer changes, ideally we want to *reverse* all the
 local filetype settings we made. We can do this with the
 [`b:undo_ftplugin`][uf] variable, which is run first whenever the filetype
 changes. After each option we change, we should add code to this variable to
-*undo* what we set:
+*undo* what we set if it needs to be reversed:
 
     setlocal spell
     let b:undo_ftplugin .= '|setlocal spell<'
@@ -348,7 +365,7 @@ filetype is unloaded.
 ### The difference with indent
 
 Don't forget that code related to indentation, such as `autoindent` or
-`indentexpr` settings, goes in a different location again:
+`indentexpr` settings, goes in a different location again: `~/.vim/indent` or
 `~/.vim/after/indent`. Those files are called if you include the word `indent`
 in your `:filetype` call.
 
@@ -356,50 +373,66 @@ You can put indent settings in your filetype plugin if you want to—Vim won't
 protest, or even notice—but remember that ideally here we're trying to find the
 *right place* for things.
 
-Write your own `:compiler`
---------------------------
+### Detecting filetypes
 
-Another Vim command that is essentially a thin wrapper around `:runtime` is
-[`:compiler`][cm], which is used to set the [`'makeprg'`][mp] and
-[`'errorformat'`][ef] options for the [`:make`][mk] command and the
-[quickfix][qf] tools.
+As a final note for filetype-dependent logic, don't forget that hooks to set a
+buffer's filetype have their own subdirectory too, in `ftdetect`:
 
-Rather than code like this in your vimrc:
+    autocmd BufNewFile,BufRead */irc/*.log setfiletype irssilog
 
-    nnoremap \m setlocal makeprg=footool\ -n\ --\ %:S errorformat=%u
-
-You can put a few commands into `~/.vim/compiler/footool.vim`:
+Putting the hooks in the `ftdetect` directory means they are loaded as part of
+the `filetypedetect` `augroup` defined in `filetype.vim`. This is therefore one
+place in which you do *not* have to surround `autocmd` definitions in a
+self-clearing `augroup`—because if you put the definitions in the right place,
+it's already done for you.
 
 Be water, my friend
 -------------------
 
-If you'd like to see examples of how this layout can end up looking, the
-entirety of my [personal ~/.vim directory][pv] is available on my website.
+Note that all of the above is just the beginning: we haven't even touched on
+[lazy-loading functions][al] for speed with definitions in `~/.vim/autoload`,
+or custom [`:compiler`][cm] definitions for setting `'makeprg'` and
+`'errorformat'` in `~/.vim/compiler`: yet more examples of Vim functionality
+that wraps around `:runtime` loading.
 
-[dc]: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/cbe1fb5b5505e17bd7709669168c367903d94cd4/.vimrc
-[sl]: https://bitbucket.org/sjl/dotfiles/src/e2a961f1d037e53ea2809885a65feba66a9aa03e/vim/vimrc?at=default&fileviewer=file-view-default
-[rc]: http://vimhelp.appspot.com/usr_05.txt.html#05.1
-[et]: http://vimhelp.appspot.com/options.txt.html#%27expandtab%27
-[wr]: http://vimhelp.appspot.com/options.txt.html#%27wrap%27
-[pp]: http://vimhelp.appspot.com/usr_41.txt.html#using-%3CPlug%3E
-[sv]: http://vimhelp.appspot.com/eval.txt.html#script-variable
-[fn]: http://vimhelp.appspot.com/repeat.txt.html#%3Afinish
-[wp]: http://vimhelp.appspot.com/usr_41.txt.html#write-plugin
-[mf]: http://vimhelp.appspot.com/syntax.txt.html#mail%2Evim
-[ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
-[fp]: http://vimhelp.appspot.com/usr_05.txt.html#ftplugins
+While Vim does afford the user tremendous power in configuring and customizing,
+there is definitely a **Way of Vim** for the timely loading of relevant
+configuration, and if you learn a little about how it works, you'll fight with
+your editor that much less. When you first learned Vim, do you remember how
+strange using the `hjkl` keys for movement seemed, before it made sense?
+Do you remember how you wanted to stay in insert mode all the time, before
+normal mode made sense?
+
+Working within the Vim runtime file structure instead of ignoring it, fighting
+with it, or trying to reshape it can make your `~/.vim` directory into a
+refined toolbox, with a place for everything, and everything in its place. It's
+well worth the effort.
+
+If you'd like to see an example of how this layout can end up looking when you
+make it work for you, the entirety of my [personal ~/.vim directory][pv] is
+available on my website.
+
 [ad]: http://vimhelp.appspot.com/options.txt.html#after-directory
-[uf]: http://vimhelp.appspot.com/usr_41.txt.html#undo_ftplugin
-[st]: http://vim.wikia.com/wiki/Remove_unwanted_spaces
-[lp]: http://vimhelp.appspot.com/starting.txt.html#load-plugins
-[ss]: http://vimhelp.appspot.com/editing.txt.html#starstar-wildcard
-[sn]: http://vimhelp.appspot.com/repeat.txt.html#%3Ascriptnames
-[sc]: http://vimhelp.appspot.com/repeat.txt.html#%3Asource
-[rt]: http://vimhelp.appspot.com/repeat.txt.html#%3Aruntime
-[ft]: http://vimhelp.appspot.com/filetype.txt.html#%3Afiletype
-[pv]: https://sanctum.geek.nz/cgit/dotfiles.git/tree/vim
+[ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
+[al]: http://vimhelp.appspot.com/eval.txt.html#autoload
 [cm]: http://vimhelp.appspot.com/quickfix.txt.html#%3Acompiler
-[et]: http://vimhelp.appspot.com/options.txt.html#%27makeprg%27
-[ef]: http://vimhelp.appspot.com/options.txt.html#%27errorformat%27
-[mk]: http://vimhelp.appspot.com/quickfix.txt.html#%27make%27
-[qf]: http://vimhelp.appspot.com/quickfix.txt.html
+[dc]: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/cbe1fb5b5505e17bd7709669168c367903d94cd4/.vimrc
+[et]: http://vimhelp.appspot.com/options.txt.html#%27expandtab%27
+[fn]: http://vimhelp.appspot.com/repeat.txt.html#%3Afinish
+[fp]: http://vimhelp.appspot.com/usr_05.txt.html#ftplugins
+[ft]: http://vimhelp.appspot.com/filetype.txt.html#%3Afiletype
+[lp]: http://vimhelp.appspot.com/starting.txt.html#load-plugins
+[mf]: http://vimhelp.appspot.com/syntax.txt.html#mail%2Evim
+[pp]: http://vimhelp.appspot.com/usr_41.txt.html#using-%3CPlug%3E
+[pv]: https://sanctum.geek.nz/cgit/dotfiles.git/tree/vim
+[rc]: http://vimhelp.appspot.com/usr_05.txt.html#05.1
+[rt]: http://vimhelp.appspot.com/repeat.txt.html#%3Aruntime
+[sc]: http://vimhelp.appspot.com/repeat.txt.html#%3Asource
+[sl]: https://bitbucket.org/sjl/dotfiles/src/e2a961f1d037e53ea2809885a65feba66a9aa03e/vim/vimrc?at=default&fileviewer=file-view-default
+[sn]: http://vimhelp.appspot.com/repeat.txt.html#%3Ascriptnames
+[ss]: http://vimhelp.appspot.com/editing.txt.html#starstar-wildcard
+[st]: http://vim.wikia.com/wiki/Remove_unwanted_spaces
+[sv]: http://vimhelp.appspot.com/eval.txt.html#script-variable
+[uf]: http://vimhelp.appspot.com/usr_41.txt.html#undo_ftplugin
+[wp]: http://vimhelp.appspot.com/usr_41.txt.html#write-plugin
+[wr]: http://vimhelp.appspot.com/options.txt.html#%27wrap%27
