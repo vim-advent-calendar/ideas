@@ -436,6 +436,7 @@ for download][pv].
 [sc]: http://vimhelp.appspot.com/repeat.txt.html#%3Asource
 [sl]: https://bitbucket.org/sjl/dotfiles/src/e2a961f1d037e53ea2809885a65feba66a9aa03e/vim/vimrc?at=default&fileviewer=file-view-default
 [sn]: http://vimhelp.appspot.com/repeat.txt.html#%3Ascriptnames
+[sp]: http://vimhelp.appspot.com/options.txt.html#%27spell%27
 [ss]: http://vimhelp.appspot.com/editing.txt.html#starstar-wildcard
 [st]: http://vim.wikia.com/wiki/Remove_unwanted_spaces
 [sv]: http://vimhelp.appspot.com/eval.txt.html#script-variable
