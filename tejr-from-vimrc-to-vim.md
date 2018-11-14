@@ -44,8 +44,8 @@ to *package* any useful part of your configuration for others to use.
 Your own personal `$VIMRUNTIME`
 -------------------------------
 
-Most of the benefit of a `~/.vim` configuration directory centers around "going
-with the grain" of the way Vim already does things, affording you a lot of
+Most of the benefit of a `~/.vim` configuration directory centers around “going
+with the grain” of the way Vim already does things, affording you a lot of
 control over in what order and under what circumstances specific configuration
 is loaded.
 
@@ -145,7 +145,7 @@ programs of their own, so we can put them into self-contained file in the
 
 As a common example, if you’ve been reading others’ vimrc files, you will have
 doubtless seen many attempts to solve the universal problem of quickly removing
-spaces at the end of lines—or "trailing whitespace"—from code. This function to
+spaces at the end of lines—or “trailing whitespace”—from code. This function to
 do so is from the [Vim Tips wiki][vs]:
 
     function StripTrailingWhitespace()
@@ -184,7 +184,7 @@ too, despite being loaded *before* the function was defined.
 
 ### What’s a plugin, anyway?
 
-Why `~/.vim/plugin`? You might object that our code isn’t a "real" plugin; it’s
+Why `~/.vim/plugin`? You might object that our code isn’t a “real” plugin; it’s
 just a single function. To Vim, that’s not a meaningful distinction—as
 described in [`:help load-plugins`][lp], it loads all the `*.vim` files it can
 in the `plugins` subdirectory of each of the directories in `'runtimepath'`. It
