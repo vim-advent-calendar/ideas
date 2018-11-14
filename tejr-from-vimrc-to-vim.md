@@ -264,7 +264,7 @@ expose an interface from the plugin file:
       ...
     endfunction
     nnoremap <Plug>StripTrailingWhitespace
-          \ :<C-O>:call <SID>StripTrailingWhitespace()<CR>
+          \ :<C-U>call <SID>StripTrailingWhitespace()<CR>
 
 And then put your choice of mapping to it in your vimrc:
 
@@ -361,6 +361,12 @@ changes. After each option we change, we should add code to this variable to
 The `spell<` syntax used here specifies that the local value of `'spell'`
 should be restored to match the global value of `'spell'`, at the time the
 filetype is unloaded.
+
+We can check its value with `:let`:
+
+    :set ft=mail
+    :let b:undo_ftplugin
+    b:undo_ftplugin        setl modeline< tw< fo< comments<|setlocal spell<
 
 ### The difference with indent
 
