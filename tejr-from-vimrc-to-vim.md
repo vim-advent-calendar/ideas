@@ -4,8 +4,8 @@ From `.vimrc` to `.vim`
 > You can't have everything. Where would you put it?
 > –Steven Wright
 
-Attack of the 5,000-line `.vimrc`
----------------------------------
+Attack of the 5,000-line vimrc
+------------------------------
 
 Vim is a tremendously configurable and extensible editor, with a culture of
 enthusiastic users eagerly sharing and trying out configuration for their
@@ -20,7 +20,7 @@ Configurations get progressively larger, more intricate, and finely-tuned.
 
 If you're an intermediate to experienced user that has one of these longer
 files, you're in good company. Damian Conway, a Vim guru specializing in Perl,
-published [a .vimrc with 1,855 lines][dc], and at the time of writing, [Steve
+published [a vimrc with 1,855 lines][dc], and at the time of writing, [Steve
 Losh's is a whopping 3,160 lines][sl]. I'm sure you can find vimrc files that
 are even longer—perhaps yours already is.
 
@@ -33,8 +33,8 @@ of a single mammoth configuration file, there's a strong case to be made for
 having a larger set of relatively smaller files that each have a role or
 responsibility—and those files go in `~/.vim`.
 
-Applying a directory hierarchy to replace your mammoth `.vimrc` will not only
-help to keep your configuration manageable, it may also help with keeping Vim
+Applying a directory hierarchy to replace your mammoth vimrc will not only help
+to keep your configuration manageable, it may also help with keeping Vim
 running snappily and smoothly by loading code and configuration only when you
 actually need it. It'll also be clearer from its position in the directory
 hierarchy what the purpose of any given configuration is, both for you and for
@@ -165,8 +165,8 @@ It's usually followed by a mapping of some sort to actually call the function:
 Functions like the one above don't need to be loaded every time vimrc is
 sourced. Once defined, they can just sit there, ready for invocation when
 appropriate. In fact, for the function above, Vim throws an error if we attempt
-to reload our `~/.vimrc`, because it doesn't like the re-definition. We could
-fix that by declaring the function with `function!`, but there's another way:
+to reload our vimrc, because it doesn't like the re-definition. We could fix
+that by declaring the function with `function!`, but there's another way:
 instead of putting the function definition in `~/.vimrc`, drop it into
 `~/.vim/plugin` with a `.vim` extension, for example as
 `~/.vim/plugin/strip_trailing_whitespace.vim`.
@@ -179,7 +179,7 @@ checking it's included in the output of [`:scriptnames`][sn]:
     10: ~/.vim/plugin/strip_trailing_whitespace.vim
     ...
 
-Note that the `<Leader>x` mapping left in your ~/.vimrc still works just fine,
+Note that the `<Leader>x` mapping left in your vimrc still works just fine,
 too, despite being loaded *before* the function was defined.
 
 ### What's a plugin, anyway?
