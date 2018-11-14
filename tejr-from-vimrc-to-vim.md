@@ -415,8 +415,8 @@ refined toolbox, with a place for everything, and everything in its place. It's
 well worth the effort.
 
 If you'd like to see an example of how this layout can end up looking when you
-make it work for you, the entirety of my [personal ~/.vim directory][pv] is
-available on my website.
+make it work for you, [the author's personal ~/.vim directory is available for
+download][pv].
 
 [ad]: http://vimhelp.appspot.com/options.txt.html#after-directory
 [ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
@@ -430,7 +430,7 @@ available on my website.
 [lp]: http://vimhelp.appspot.com/starting.txt.html#load-plugins
 [mf]: http://vimhelp.appspot.com/syntax.txt.html#mail%2Evim
 [pp]: http://vimhelp.appspot.com/usr_41.txt.html#using-%3CPlug%3E
-[pv]: https://sanctum.geek.nz/cgit/dotfiles.git/tree/vim
+[pv]: tejr-from-vimrc-to-vim.zip
 [rc]: http://vimhelp.appspot.com/usr_05.txt.html#05.1
 [rt]: http://vimhelp.appspot.com/repeat.txt.html#%3Aruntime
 [sc]: http://vimhelp.appspot.com/repeat.txt.html#%3Asource
