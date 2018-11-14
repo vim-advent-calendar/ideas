@@ -246,8 +246,8 @@ of a feature, or whether the plugin has already been loaded:
     endif
     let g:loaded_myplugin = 1
 
-Now you don’t have to wrap the whole thing in a single `:if` block in your
-vimrc.
+Now you don’t have to wrap the whole thing in a single [`:if`][if] block in
+your vimrc.
 
 ### The question of mappings
 
@@ -362,7 +362,7 @@ The `spell<` syntax used here specifies that the local value of `'spell'`
 should be restored to match the global value of `'spell'`, at the time the
 filetype is unloaded.
 
-We can check its value with `:let`:
+We can check its value with [`:let`][lt]:
 
     :set ft=mail
     :let b:undo_ftplugin
@@ -382,7 +382,7 @@ protest, or even notice—but remember that ideally here we’re trying to find 
 ### Detecting filetypes
 
 As a final note for filetype-dependent logic, don’t forget that hooks to set a
-buffer’s filetype have their own subdirectory too, in `ftdetect`:
+buffer’s filetype have their own subdirectory too, in [`ftdetect`][fd]:
 
     autocmd BufNewFile,BufRead */irc/*.log setfiletype irssilog
 
@@ -424,10 +424,13 @@ for download][pv].
 [cm]: http://vimhelp.appspot.com/quickfix.txt.html#%3Acompiler
 [dc]: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/cbe1fb5b5505e17bd7709669168c367903d94cd4/.vimrc
 [et]: http://vimhelp.appspot.com/options.txt.html#%27expandtab%27
+[fd]: http://vimhelp.appspot.com/filetype.txt.html#ftdetect
 [fn]: http://vimhelp.appspot.com/repeat.txt.html#%3Afinish
 [fp]: http://vimhelp.appspot.com/usr_05.txt.html#ftplugins
 [ft]: http://vimhelp.appspot.com/filetype.txt.html#%3Afiletype
+[if]: http://vimhelp.appspot.com/eval.txt.html#%3Aif
 [lp]: http://vimhelp.appspot.com/starting.txt.html#load-plugins
+[lt]: http://vimhelp.appspot.com/eval.txt.html#%3Alet
 [mf]: http://vimhelp.appspot.com/syntax.txt.html#mail%2Evim
 [pp]: http://vimhelp.appspot.com/usr_41.txt.html#using-%3CPlug%3E
 [pv]: tejr-from-vimrc-to-vim.zip
