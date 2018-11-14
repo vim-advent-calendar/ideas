@@ -442,3 +442,4 @@ for download][pv].
 [uf]: http://vimhelp.appspot.com/usr_41.txt.html#undo_ftplugin
 [wp]: http://vimhelp.appspot.com/usr_41.txt.html#write-plugin
 [wr]: http://vimhelp.appspot.com/options.txt.html#%27wrap%27
+[vs]: http://vim.wikia.com/wiki/Remove_unwanted_spaces
