@@ -2,6 +2,7 @@ From `.vimrc` to `.vim`
 =======================
 
 > You can’t have everything. Where would you put it?
+>
 > –Steven Wright
 
 Attack of the 5,000-line vimrc
