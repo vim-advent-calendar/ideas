@@ -142,7 +142,8 @@ diff would change to the following:
 ![patience diff](https://raw.githubusercontent.com/chrisbra/vim-diff-enhanced/master/histogram_diff.png)
 
 Pretty nice, isn't it?
-This is also available as [screencast][10]
+Here is a screencast:
+<script id="asciicast-YL035raOlEbadoWNLpj5cBXan" src="https://asciinema.org/a/YL035raOlEbadoWNLpj5cBXan.js" async></script>
 
 ### The indent heuristics
 
@@ -181,14 +182,15 @@ Now one can clearly see, what part has been added.
 
 That is pretty neat.
 
-This is also available as [screencast][11]
+This is also available as Screencast:
+<script id="asciicast-QyIhLUUmwMdpzIjRhkdcPdUyx" src="https://asciinema.org/a/QyIhLUUmwMdpzIjRhkdcPdUyx.js" async></script>
 
 ## What is next
 
 Having included the xdiff library this does not mean, improving the diff
 mode stops. There have been additional patches that fixed small bugs as
 well as improved the diff mode further. For example the DiffUpdate
-autocommand has been included in [Patch 8.1.397][12] which allows to run
+autocommand has been included in [Patch 8.1.397][10] which allows to run
 commands once the diff mode has been updated.
 
 In addition, there are already requests to provide a VimScript API for
@@ -209,6 +211,4 @@ be developed in the future.
 [7]: https://github.com/vim/vim/commit/e828b7621cf9065a3582be0c4dd1e0e846e335bf
 [8]: https://en.wikipedia.org/wiki/Diff#Unified_format
 [9]: https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
-[10]: https://asciinema.org/a/YL035raOlEbadoWNLpj5cBXan
-[11]: https://asciinema.org/a/QyIhLUUmwMdpzIjRhkdcPdUyx
-[12]: https://github.com/vim/vim/releases/tag/v8.1.0397
+[10]: https://github.com/vim/vim/releases/tag/v8.1.0397
