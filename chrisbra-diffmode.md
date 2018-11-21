@@ -135,7 +135,7 @@ int main(int argc, char **argv)
 ```
 
 The default diff, running `vimdiff file1 file2` produced would then look like this:
-![default diff](https://github.com/chrisbra/vim-diff-enhanced/blob/master/default_diff.png)
+![default diff](https://raw.githubusercontent.com/chrisbra/vim-diff-enhanced/master/default_diff.png)
 
 However, now you can simply do `:set diffopt+=algorithm:patience` the
 diff would change to the following:
