@@ -326,12 +326,12 @@ We can improve this still further.
 ### Loading filetype code afterwards
 
 Rather than putting our option setting in `~/.vim/ftplugin/mail.vim`, we’ll put
-it in `~/.vim/after/ftplugin/mail.vim`—note the extra `after` level. The [after
-directory][ad] is run *after* the runtime files included in Vim, so with this
-path, we can ensure that our option is set *after* any main mail filetype
-plugin at `$VIMRUNTIME/ftplugin/mail.vim` has completed whatever it does. This
-makes it more straightforward to *override* what a filetype plugin configures
-if you happen to disagree with it.
+it in `~/.vim/after/ftplugin/mail.vim`—note the extra level `after` in the
+path. The [after directory][ad] is run *after* the runtime files included in
+Vim, so with this path, we can ensure that our option is set *after* any main
+mail filetype plugin at `$VIMRUNTIME/ftplugin/mail.vim` has completed whatever
+it does. This makes it more straightforward to *override* what a filetype
+plugin configures, if you disagree with any of it.
 
 If you want to make this even more granular, you can also put files in
 *subdirectories* named after the filetype:
