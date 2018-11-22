@@ -391,14 +391,14 @@ they want using appropriate arguments to `:filetype`.
 ### Detecting filetypes
 
 As a final note for filetype-dependent logic, don’t forget that hooks to set a
-buffer’s filetype have their own subdirectory too, in [`ftdetect`][fd]:
+buffer’s filetype have their own subdirectory again, in [`ftdetect`][fd]:
 
     autocmd BufNewFile,BufRead */irc/*.log setfiletype irssilog
 
 Putting the hooks in the `ftdetect` directory means they are loaded as part of
 the `filetypedetect` `augroup` defined in `filetype.vim`. This is therefore one
 place in which you do *not* have to surround `autocmd` definitions in a
-self-clearing `augroup`—because if you put the definitions in the right place,
+self-clearing `augroup`, because if you put the definitions in the right place,
 it’s already done for you.
 
 Be water, my friend
@@ -407,7 +407,7 @@ Be water, my friend
 Note that all of the above is just the beginning: we haven’t even touched on
 [lazy-loading functions][al] for speed with definitions in `~/.vim/autoload`,
 or custom [`:compiler`][cm] definitions for setting [`'makeprg'`][mp] and
-[`'errorformat'`][ef] in `~/.vim/compiler`: yet more examples of Vim
+[`'errorformat'`][ef] in `~/.vim/compiler`—these are yet more examples of Vim
 functionality that wraps around `:runtime` loading.
 
 While Vim does afford the user tremendous power in configuring and customizing,
