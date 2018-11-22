@@ -376,14 +376,17 @@ We can check its value with [`:let`][lt]:
 
 ### The difference with indent
 
-Don’t forget that code related to indentation, such as `autoindent` or
-`indentexpr` settings, goes in a different location again: `~/.vim/indent` or
-`~/.vim/after/indent`. Those files are called if you include the word `indent`
-in your `:filetype` call.
+Don’t forget that code related to indentation goes in a different location
+again: `~/.vim/indent` or `~/.vim/after/indent`. Those files are called if you
+include the word `indent` in your `:filetype` call. You should use this layout
+for files that change [`'autoindent'`][ai] or [`'indentexpr'`][ie] settings,
+for example.
 
-You can put indent settings in your filetype plugin if you want to—Vim won’t
-protest, or even notice—but remember that ideally here we’re trying to find the
-*right place* for things.
+You can put indent settings in your filetype plugin if you want to, but
+remember that ideally here we’re trying to find the *right place* for things.
+Putting your indent settings in the right place keeps them separate from all
+other filetype-specific settings, to give users an easy way to load only what
+they want using appropriate arguments to `:filetype`.
 
 ### Detecting filetypes
 
@@ -428,6 +431,7 @@ for download][pv].
 
 [ad]: http://vimhelp.appspot.com/options.txt.html#after-directory
 [ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
+[ai]: http://vimhelp.appspot.com/options.txt.html#%27autoindent%27
 [al]: http://vimhelp.appspot.com/eval.txt.html#autoload
 [cm]: http://vimhelp.appspot.com/quickfix.txt.html#%3Acompiler
 [co]: http://vimhelp.appspot.com/options.txt.html#%27compatible%27
@@ -438,6 +442,7 @@ for download][pv].
 [fn]: http://vimhelp.appspot.com/repeat.txt.html#%3Afinish
 [fp]: http://vimhelp.appspot.com/usr_05.txt.html#ftplugins
 [ft]: http://vimhelp.appspot.com/filetype.txt.html#%3Afiletype
+[ie]: http://vimhelp.appspot.com/options.txt.html#%27indentexpr%27
 [if]: http://vimhelp.appspot.com/eval.txt.html#%3Aif
 [lp]: http://vimhelp.appspot.com/starting.txt.html#load-plugins
 [lt]: http://vimhelp.appspot.com/eval.txt.html#%3Alet
