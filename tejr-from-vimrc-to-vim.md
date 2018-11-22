@@ -302,11 +302,11 @@ is actually edited in that session. It makes more sense to put this into a
 
 A file placed in `~/.vim/ftplugin/mail.vim` will be detected and run whenever a
 new buffer’s filetype is set to `mail`. The hooks that do this are set up by
-the long `filetype.vim` file in your `$VIMRUNTIME` Vim runtime when activated
-by `filetype plugin on`. They do a lot of work to detect the type of any given
-file, and to run the appropriate filetype plugins, so there’s no need for the
-`autocmd` hooks here; we already have hooks loaded, and a place to put the
-definition, so we can just put this single line in there:
+the long `filetype.vim` file in your `$VIMRUNTIME` when activated by `filetype
+plugin on`. They do a lot of work to detect the type of any given file, and to
+run the appropriate filetype plugins, so there’s no need for the `autocmd`
+hooks here; we already have hooks loaded, and a place to put the definition, so
+we can just put this single line in there:
 
     setlocal spell
 
@@ -326,12 +326,12 @@ We can improve this still further.
 ### Loading filetype code afterwards
 
 Rather than putting our option setting in `~/.vim/ftplugin/mail.vim`, we’ll put
-it in `~/.vim/after/ftplugin/mail.vim`—note the extra `after` level. The [after
-directory][ad] is run *after* the runtime files included in Vim, so with this
-path, we can ensure that our option is set *after* any main mail filetype
-plugin at `$VIMRUNTIME/ftplugin/mail.vim` has completed whatever it does. This
-makes it more straightforward to *override* what a filetype plugin configures
-if you happen to disagree with it.
+it in `~/.vim/after/ftplugin/mail.vim`—note the extra level `after` in the
+path. The [after directory][ad] is run *after* the runtime files included in
+Vim, so with this path, we can ensure that our option is set *after* any main
+mail filetype plugin at `$VIMRUNTIME/ftplugin/mail.vim` has completed whatever
+it does. This makes it more straightforward to *override* what a filetype
+plugin configures, if you disagree with any of it.
 
 If you want to make this even more granular, you can also put files in
 *subdirectories* named after the filetype:
@@ -344,7 +344,8 @@ The filetype followed by an underscore and then a script name works, too:
     ~/.vim/after/ftplugin/mail_spell.vim
     ~/.vim/after/ftplugin/mail_quote.vim
 
-This is another `:runtime` analogue on Vim’s part; it’s like we ran this:
+You may have guessed by now that this is yet another `:runtime` wrapper on
+Vim’s part; it’s like we ran this:
 
     :runtime! ftplugin/mail.vim ftplugin/mail_*.vim ftplugin/mail/*.vim
 
@@ -352,9 +353,13 @@ This is another `:runtime` analogue on Vim’s part; it’s like we ran this:
 
 If the filetype of the buffer changes, ideally we want to *reverse* all the
 local filetype settings we made. We can do this with the
-[`b:undo_ftplugin`][uf] variable, which is run first whenever the filetype
-changes. After each option we change, we should add code to this variable to
-*undo* what we set if it needs to be reversed:
+[`b:undo_ftplugin`][uf] variable, which contains a list of pipe-separated (`|`)
+commands to be run whenever the filetype changes. The commands *undo* the
+buffer-specific settings for the previous filetype, ready for the filetype
+plugins for the new filetype to be loaded.
+
+To use this, we should add code to this variable after each option we change,
+with the corresponding code to revert it:
 
     setlocal spell
     let b:undo_ftplugin .= '|setlocal spell<'
@@ -371,26 +376,29 @@ We can check its value with [`:let`][lt]:
 
 ### The difference with indent
 
-Don’t forget that code related to indentation, such as `autoindent` or
-`indentexpr` settings, goes in a different location again: `~/.vim/indent` or
-`~/.vim/after/indent`. Those files are called if you include the word `indent`
-in your `:filetype` call.
+Don’t forget that code related to indentation goes in a different location
+again: `~/.vim/indent` or `~/.vim/after/indent`. Those files are called if you
+include the word `indent` in your `:filetype` call. You should use this layout
+for files that change [`'autoindent'`][ai] or [`'indentexpr'`][ie] settings,
+for example.
 
-You can put indent settings in your filetype plugin if you want to—Vim won’t
-protest, or even notice—but remember that ideally here we’re trying to find the
-*right place* for things.
+You can put indent settings in your filetype plugin if you want to, but
+remember that ideally here we’re trying to find the *right place* for things.
+Putting your indent settings in the right place keeps them separate from all
+other filetype-specific settings, to give users an easy way to load only what
+they want using appropriate arguments to `:filetype`.
 
 ### Detecting filetypes
 
 As a final note for filetype-dependent logic, don’t forget that hooks to set a
-buffer’s filetype have their own subdirectory too, in [`ftdetect`][fd]:
+buffer’s filetype have their own subdirectory again, in [`ftdetect`][fd]:
 
     autocmd BufNewFile,BufRead */irc/*.log setfiletype irssilog
 
 Putting the hooks in the `ftdetect` directory means they are loaded as part of
 the `filetypedetect` `augroup` defined in `filetype.vim`. This is therefore one
 place in which you do *not* have to surround `autocmd` definitions in a
-self-clearing `augroup`—because if you put the definitions in the right place,
+self-clearing `augroup`, because if you put the definitions in the right place,
 it’s already done for you.
 
 Be water, my friend
@@ -399,7 +407,7 @@ Be water, my friend
 Note that all of the above is just the beginning: we haven’t even touched on
 [lazy-loading functions][al] for speed with definitions in `~/.vim/autoload`,
 or custom [`:compiler`][cm] definitions for setting [`'makeprg'`][mp] and
-[`'errorformat'`][ef] in `~/.vim/compiler`: yet more examples of Vim
+[`'errorformat'`][ef] in `~/.vim/compiler`—these are yet more examples of Vim
 functionality that wraps around `:runtime` loading.
 
 While Vim does afford the user tremendous power in configuring and customizing,
@@ -423,6 +431,7 @@ for download][pv].
 
 [ad]: http://vimhelp.appspot.com/options.txt.html#after-directory
 [ag]: http://vimhelp.appspot.com/autocmd.txt.html#%3Aaugroup
+[ai]: http://vimhelp.appspot.com/options.txt.html#%27autoindent%27
 [al]: http://vimhelp.appspot.com/eval.txt.html#autoload
 [cm]: http://vimhelp.appspot.com/quickfix.txt.html#%3Acompiler
 [co]: http://vimhelp.appspot.com/options.txt.html#%27compatible%27
@@ -433,6 +442,7 @@ for download][pv].
 [fn]: http://vimhelp.appspot.com/repeat.txt.html#%3Afinish
 [fp]: http://vimhelp.appspot.com/usr_05.txt.html#ftplugins
 [ft]: http://vimhelp.appspot.com/filetype.txt.html#%3Afiletype
+[ie]: http://vimhelp.appspot.com/options.txt.html#%27indentexpr%27
 [if]: http://vimhelp.appspot.com/eval.txt.html#%3Aif
 [lp]: http://vimhelp.appspot.com/starting.txt.html#load-plugins
 [lt]: http://vimhelp.appspot.com/eval.txt.html#%3Alet
