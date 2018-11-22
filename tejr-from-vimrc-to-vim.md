@@ -344,7 +344,8 @@ The filetype followed by an underscore and then a script name works, too:
     ~/.vim/after/ftplugin/mail_spell.vim
     ~/.vim/after/ftplugin/mail_quote.vim
 
-This is another `:runtime` analogue on Vim’s part; it’s like we ran this:
+You may have guessed by now that this is yet another `:runtime` wrapper on
+Vim’s part; it’s like we ran this:
 
     :runtime! ftplugin/mail.vim ftplugin/mail_*.vim ftplugin/mail/*.vim
 
