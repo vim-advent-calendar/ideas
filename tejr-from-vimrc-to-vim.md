@@ -353,9 +353,13 @@ Vim’s part; it’s like we ran this:
 
 If the filetype of the buffer changes, ideally we want to *reverse* all the
 local filetype settings we made. We can do this with the
-[`b:undo_ftplugin`][uf] variable, which is run first whenever the filetype
-changes. After each option we change, we should add code to this variable to
-*undo* what we set if it needs to be reversed:
+[`b:undo_ftplugin`][uf] variable, which contains a list of pipe-separated (`|`)
+commands to be run whenever the filetype changes. The commands *undo* the
+buffer-specific settings for the previous filetype, ready for the filetype
+plugins for the new filetype to be loaded.
+
+To use this, we should add code to this variable after each option we change,
+with the corresponding code to revert it:
 
     setlocal spell
     let b:undo_ftplugin .= '|setlocal spell<'
