@@ -292,7 +292,7 @@ definitions for the same hook:
 
     augroup ftmail
       autocmd!
-      autocmd mail setlocal spell
+      autocmd FileType mail setlocal spell
     augroup END
 
 However, we can avoid this boilerplate. The second thing to note is that this
