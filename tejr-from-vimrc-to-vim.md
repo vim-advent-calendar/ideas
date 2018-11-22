@@ -302,11 +302,11 @@ is actually edited in that session. It makes more sense to put this into a
 
 A file placed in `~/.vim/ftplugin/mail.vim` will be detected and run whenever a
 new buffer’s filetype is set to `mail`. The hooks that do this are set up by
-the long `filetype.vim` file in your `$VIMRUNTIME` Vim runtime when activated
-by `filetype plugin on`. They do a lot of work to detect the type of any given
-file, and to run the appropriate filetype plugins, so there’s no need for the
-`autocmd` hooks here; we already have hooks loaded, and a place to put the
-definition, so we can just put this single line in there:
+the long `filetype.vim` file in your `$VIMRUNTIME` when activated by `filetype
+plugin on`. They do a lot of work to detect the type of any given file, and to
+run the appropriate filetype plugins, so there’s no need for the `autocmd`
+hooks here; we already have hooks loaded, and a place to put the definition, so
+we can just put this single line in there:
 
     setlocal spell
 
