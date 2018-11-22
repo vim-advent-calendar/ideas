@@ -284,7 +284,7 @@ intended to set the [`'spell'`][sp] option on, but only for buffers of the
 [`mail` filetype][mf], to highlight possible spelling errors as an email
 message is edited:
 
-    autocmd Filetype mail setlocal spell
+    autocmd FileType mail setlocal spell
 
 The first thing to note here is that this should be surrounded in a
 self-clearing [`augroup`][ag], so that re-running it doesn’t leave multiple
