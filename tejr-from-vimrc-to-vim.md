@@ -53,7 +53,7 @@ system, it will very likely be something like `/usr/share/vim/vim81`.
 
 Let’s take a look at the contents of that directory:
 
-    $ ls /usr/share/vim/vim80
+    $ ls /usr/share/vim/vim81
     autoload/     bugreport.vim       colors/     compiler/
     defaults.vim  delmenu.vim         doc/        evim.vim
     filetype.vim  ftoff.vim           ftplugin/   ftplugin.vim
