@@ -267,8 +267,8 @@ mappings for it more straightforward. There’s more general advice about good
 mapping practices in writing fully-fledged plugin files in [`:help
 write-plugin`][wp].
 
-Not really my `filetype`
-------------------------
+Not really my `:filetype`
+-------------------------
 
 Another pattern in big vimrc files is setting options only for buffers of a
 certain filetype. For example, this line of code is intended to set the
