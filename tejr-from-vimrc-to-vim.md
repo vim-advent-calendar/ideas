@@ -458,7 +458,6 @@ for download][pv].
 [sn]: http://vimhelp.appspot.com/repeat.txt.html#%3Ascriptnames
 [sp]: http://vimhelp.appspot.com/options.txt.html#%27spell%27
 [ss]: http://vimhelp.appspot.com/editing.txt.html#starstar-wildcard
-[st]: http://vim.wikia.com/wiki/Remove_unwanted_spaces
 [sv]: http://vimhelp.appspot.com/eval.txt.html#script-variable
 [uf]: http://vimhelp.appspot.com/usr_41.txt.html#undo_ftplugin
 [wp]: http://vimhelp.appspot.com/usr_41.txt.html#write-plugin
