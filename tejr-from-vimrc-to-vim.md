@@ -100,7 +100,7 @@ your vimrc:
 
     source ~/.vim/mappings.vim
 
-Vim has another command named [`:runtime`][rc] for loading files that works
+Vim has another command named [`:runtime`][rt] for loading files that works
 with the file layout of the `'runtimepath'` directories we just inspected. Used
 without an exclamation mark, it reads Vim script commands from the first path
 it finds in any of its `'runtimepath'` directories. With an exclamation mark
