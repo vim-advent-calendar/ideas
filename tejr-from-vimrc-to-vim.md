@@ -100,7 +100,7 @@ your vimrc:
 
     source ~/.vim/mappings.vim
 
-Vim has another command named [`:runtime`][rc] for loading files that works
+Vim has another command named [`:runtime`][rt] for loading files that works
 with the file layout of the `'runtimepath'` directories we just inspected. Used
 without an exclamation mark, it reads Vim script commands from the first path
 it finds in any of its `'runtimepath'` directories. With an exclamation mark
@@ -450,7 +450,7 @@ for download][pv].
 [mp]: http://vimhelp.appspot.com/options.txt.html#%27makeprg%27
 [pp]: http://vimhelp.appspot.com/usr_41.txt.html#using-%3CPlug%3E
 [pv]: tejr-from-vimrc-to-vim.zip
-[rc]: http://vimhelp.appspot.com/usr_05.txt.html#05.1
+[rc]: http://vimhelp.appspot.com/usr_05.txt.html#vimrc-intro
 [ro]: http://vimhelp.appspot.com/options.txt.html#%27runtimepath%27
 [rt]: http://vimhelp.appspot.com/repeat.txt.html#%3Aruntime
 [sc]: http://vimhelp.appspot.com/repeat.txt.html#%3Asource
@@ -458,7 +458,6 @@ for download][pv].
 [sn]: http://vimhelp.appspot.com/repeat.txt.html#%3Ascriptnames
 [sp]: http://vimhelp.appspot.com/options.txt.html#%27spell%27
 [ss]: http://vimhelp.appspot.com/editing.txt.html#starstar-wildcard
-[st]: http://vim.wikia.com/wiki/Remove_unwanted_spaces
 [sv]: http://vimhelp.appspot.com/eval.txt.html#script-variable
 [uf]: http://vimhelp.appspot.com/usr_41.txt.html#undo_ftplugin
 [wp]: http://vimhelp.appspot.com/usr_41.txt.html#write-plugin
