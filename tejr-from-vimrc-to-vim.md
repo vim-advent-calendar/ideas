@@ -450,7 +450,7 @@ for download][pv].
 [mp]: http://vimhelp.appspot.com/options.txt.html#%27makeprg%27
 [pp]: http://vimhelp.appspot.com/usr_41.txt.html#using-%3CPlug%3E
 [pv]: tejr-from-vimrc-to-vim.zip
-[rc]: http://vimhelp.appspot.com/usr_05.txt.html#05.1
+[rc]: http://vimhelp.appspot.com/usr_05.txt.html#vimrc-intro
 [ro]: http://vimhelp.appspot.com/options.txt.html#%27runtimepath%27
 [rt]: http://vimhelp.appspot.com/repeat.txt.html#%3Aruntime
 [sc]: http://vimhelp.appspot.com/repeat.txt.html#%3Asource
