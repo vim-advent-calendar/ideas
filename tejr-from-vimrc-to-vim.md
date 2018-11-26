@@ -287,7 +287,7 @@ This way, you don’t have to wrap all your feature-dependent code in clumsy
 Should you include a mapping that uses a defined function in the plugin itself?
 It’s up to you, but the author likes to think of vimrc files as where
 user-level preferences go, and plugins where the code they call should go.
-Mapping choices are personal, and fall into the former category.
+Key choices for mappings are personal, and fall into the former category. 
 
 If you want to keep some abstraction between what the plugin does and how it’s
 called, you can use [`<Plug>` prefix][pp] mappings to expose an interface from
