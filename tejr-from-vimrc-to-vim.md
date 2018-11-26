@@ -161,12 +161,12 @@ error condition, this allows you to avoid boilerplate checks for its existence:
     " Source extra commands for this system, if file exists
     runtime local.vim
 
-This can be useful all by itself. However, it gets more interesting when you
-realise that much of Vim’s startup process is just thin wrappers around
-`:runtime` commands; so are some of its other commands, including
-[`:filetype`][ft]. We can leverage this to run our own code before, instead of,
-or after Vim’s bundled runtime code, in order to disable, replace, modify, or
-extend it.
+Knowing how to use `:runtime` is helpful all by itself. However, it gets more
+interesting when you realise that much of Vim’s startup process is just thin
+wrappers around `:runtime` commands; so are some of its other commands,
+including [`:filetype`][ft]. We can leverage this to run our own code before,
+instead of, or after Vim’s bundled runtime code, in order to disable, replace,
+modify, or extend it.
 
 Turn on, `plugin`, drop out
 ---------------------------
