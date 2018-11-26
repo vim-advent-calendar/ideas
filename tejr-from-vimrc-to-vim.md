@@ -77,7 +77,7 @@ Of those, 1,335 are `.vim` files:
 
 All of these are just plain Vim script files, like your vimrc. Their location
 within this directory determines when they are loaded. Only a few of them are
-loaded on Vim startup. That’s well over a thousand files ready to be loaded
+loaded on Vim startup. That’s well over a thousand files, ready to be loaded
 *only when relevant*. We should take a hint from Bram on that!
 
 If we look at the value of the [`'runtimepath'`][ro] option in Vim, we can see
@@ -94,38 +94,79 @@ Lose the `:source`, Luke
 ------------------------
 
 If you’ve worked with Vim script for a while, you probably know how to use the
-[`:source`][sc] command to read it from a file. To load a separate file with
-something like mapping definitions in it, you might have a line like this in
+[`:source`][sc] command to read and execute commands from a file. For example,
+if you had the aim of loading a separate file with something like mapping
+definitions in it during Vim startup, you might have put a line like this in
 your vimrc:
 
     source ~/.vim/mappings.vim
 
-Vim has another command named [`:runtime`][rt] for loading files that works
-with the file layout of the `'runtimepath'` directories we just inspected. Used
-without an exclamation mark, it reads Vim script commands from the first path
-it finds in any of its `'runtimepath'` directories. With an exclamation mark
-added, it reads *all* of them. In both cases, we can include filename pattern
-matching with **globs**: `*` and `?` characters.
+Vim has another command named [`:runtime`][rt] that also sources Vim script
+files, but with very different behaviour—it’s the counterpart to the file
+layout of the `'runtimepath'` directories we just inspected.
 
+The `:runtime` command takes one or more relative paths as arguments. It
+iterates through each of the directories in the `'runtimepath'` option, and
+finds and sources files that match those relative paths in each one.
+
+As an example, consider these commands:
+
+    set runtimepath=~/.vim,/usr/share/vim/vim81
     runtime syntax/c.vim
+
+If a file named `~/.vim/syntax/c.vim` exists, the `:runtime` command will find
+it and source it. If such a file does not exist, `:runtime` checks for
+`/usr/share/vim/vim81/syntax/c.vim` next, and then sources that if it exists.
+
+Note that we didn’t include the leading `~/.vim` path in the pattern for
+`:runtime`—it’s a *relative* path.
+
+With an exclamation mark added, `:runtime!` sources *all* files from *all*
+`'runtimepath'` directories that match the pattern. It doesn’t stop after the
+first one.
+
     runtime! syntax/c.vim
+
+This works for multiple patterns, too:
+
+    runtime! syntax/c.vim syntax/cpp.vim
+
+We can include `*` and `?` **globs** for pattern matching:
+
     runtime! */maps.vim
+
+This sources files named `~/.vim/foo/maps.vim` and also
+`/usr/share/vim/vim81/bar/maps.vim`, if such files exist.
+
+Patterns can match filenames as well as directories:
+
+    runtime! maps/*.vim
+
+This sources any and all `.vim` files in `~/.vim/maps` and in
+`/usr/share/vim/vim81/maps`, if such directories exist.
+
+We can even use a [double asterisk][ss], which represents a path with an
+arbitrary number of directory path elements, up to 100 levels deep:
+
     runtime! **/maps.vim
 
-Note that we *don’t* include the leading `~/.vim` path in these patterns.
-
-The [double asterisk][ss] in the last example here represents a set of
-directory path elements, which can be up to 100 levels deep. This means that a
-file in `~/.vim/foo/bar/baz/quux/maps.vim` would still be found and loaded.
+With this command, a file with a deep path like
+`~/.vim/foo/bar/baz/quux/maps.vim` would still be found and loaded if the
+pattern as a whole matched.
 
 Unlike `:source`, `:runtime` doesn’t raise errors if it can’t find any matching
-files. This avoids boilerplate checks for file existence if a file’s absence is
-not an error condition.
+files. If the absence of a file matching a particular runtime path is not an
+error condition, this allows you to avoid boilerplate checks for its existence:
 
-Much of Vim’s startup process is just thin wrappers around `:runtime` commands.
-So are some of its other commands, including [`:filetype`][ft]. We can leverage
-this to run our own code before, instead of, or after Vim’s bundled runtime
-code, in order to disable, replace, modify, or extend it.
+    " Source extra commands for this system, if file exists
+    runtime local.vim
+
+This can be useful all by itself. However, it gets more interesting when you
+realise that much of Vim’s startup process is just thin wrappers around
+`:runtime` commands; so are some of its other commands, including
+[`:filetype`][ft]. We can leverage this to run our own code before, instead of,
+or after Vim’s bundled runtime code, in order to disable, replace, modify, or
+extend it.
 
 Turn on, `plugin`, drop out
 ---------------------------
@@ -246,7 +287,7 @@ This way, you don’t have to wrap all your feature-dependent code in clumsy
 Should you include a mapping that uses a defined function in the plugin itself?
 It’s up to you, but the author likes to think of vimrc files as where
 user-level preferences go, and plugins where the code they call should go.
-Mapping choices are personal, and fall into the former category.
+Key choices for mappings are personal, and fall into the former category. 
 
 If you want to keep some abstraction between what the plugin does and how it’s
 called, you can use [`<Plug>` prefix][pp] mappings to expose an interface from
