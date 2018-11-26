@@ -77,7 +77,7 @@ Of those, 1,335 are `.vim` files:
 
 All of these are just plain Vim script files, like your vimrc. Their location
 within this directory determines when they are loaded. Only a few of them are
-loaded on Vim startup. That’s well over a thousand files ready to be loaded
+loaded on Vim startup. That’s well over a thousand files, ready to be loaded
 *only when relevant*. We should take a hint from Bram on that!
 
 If we look at the value of the [`'runtimepath'`][ro] option in Vim, we can see
