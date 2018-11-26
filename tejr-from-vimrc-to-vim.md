@@ -164,9 +164,10 @@ error condition, this allows you to avoid boilerplate checks for its existence:
 Knowing how to use `:runtime` is helpful all by itself. However, it gets more
 interesting when you realise that much of Vim’s startup process is just thin
 wrappers around `:runtime` commands; so are some of its other commands,
-including [`:filetype`][ft]. We can leverage this to run our own code before,
-instead of, or after Vim’s bundled runtime code, in order to disable, replace,
-modify, or extend it.
+including [`:filetype`][ft]. We can apply this as we translate our vimrc file
+into a runtime directory, in order to run our own code before, instead of, or
+after Vim’s bundled runtime code, in order to disable, replace, modify, or
+extend it.
 
 Turn on, `plugin`, drop out
 ---------------------------
