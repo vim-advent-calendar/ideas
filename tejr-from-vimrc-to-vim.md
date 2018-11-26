@@ -347,8 +347,8 @@ can just put this single line in `~/.vim/ftplugin/mail.vim` to use them:
 
     setlocal spell
 
-With this done, upon editing a new `mail` buffer, we can confirm that our
-filetype plugin was loaded when the filetype was chosen using `:scriptnames`:
+With this done, upon editing a new `mail` buffer, we can check `:scriptnames`
+to confirm that our filetype plugin was loaded:
 
     :set filetype=mail
     :scriptnames
