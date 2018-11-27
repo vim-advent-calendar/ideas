@@ -427,19 +427,142 @@ Problem solved.
 
 ### Control-R
 
-...
+`<C-r>` inserts the content of a register from insert and command-line mode. It
+is notably useful in visual mode, when the mapping needs to work with the
+selection eg.:
+
+    xnoremap <silent> <Leader>gf y:pedit <C-r><C-r>"<cr>
+
+This will open the filename expected in the visual selection into the preview
+window. Doubling the `<C-r>` inserts the content literally, in case there were
+some control characters in the filename that might be interpreted by Vim.
+
+The expression register can also be used, opening some interesting
+possibilities:
+
+    inoremap <C-g><C-t> [<C-r>=strftime("%d/%b/%y %H:%M")<cr>]
+
+That mapping will insert the current date an time between brackets.
+
+Another example, from command-line mode:
+
+    cnoremap <C-x>_ <C-r>=split(histget('cmd', -1))[-1]<cr>
+
+This will insert the last space-separated word from the last command-line, as 
+`<M-_>` in Bash.
+
+`<C-r>` can also insert text present under the current cursor, when followed by
+some control characters. Here is an example with `<C-r><C-f>`, which inserts the
+filename under the cursor;
+
+    nnoremap <silent> <Leader>gf :pedit <C-r><C-f><cr>
+
+This is the normal mode version of the preview mapping we saw above (the
+filename recognition will depend on the `'isfname'` option). Note that on the
+command-line, for a command where a filename is expected, you can also use a few
+special Vim notations to similar effects, eg. `<cfile>` will insert on the
+command-line the filename under the cursor, and `<cword>` will insert the
+current word. If a filename is not expected, you can always use `expand()` like
+this:
+
+    nnoremap <silent> c<Tab> :let @/=expand('<cword>')<cr>cgn
+
+This mapping sets the last search pattern to the word under the cursor, and
+change it with the `cgn` sequence -- conveniently repeatable with `.` to apply
+the same replacement to some following occurrences.
 
 ### @=
 
-...
+The `@` key executes the content of a register, and once again the expression
+register offers a good deal of flexibility. As an example, consider the `<C-a>`
+normal mode command, that increases the closest number on the right of the
+cursor, if any. A common annoyance is words like `file-1.txt`: hitting `<C-a>`
+on it will turn it to `file0.txt`, to the surprise of many users, as Vim assumes
+the next number is '-1', not '1'. Let's write a mapping to change this behavior.
+
+    function! Increment() abort
+      call search('\d\@<!\d\+\%#\d', 'b')
+      call search('\d', 'c')
+      norm! v
+      call search('\d\+', 'ce')
+      exe "norm!" "\<C-a>"
+      return ''
+    endfun
+
+The `Increment()` function finds the sequence of digits under the cursor or
+following it, then selects it in visual mode, and finally runs `<C-a>` on it.
+The visual mode version of `<C-a>` is relatively recent, so vim8 or a late vim7
+version is required. Now, let's remap the normal mode `<C-a>` to our function:
+
+    nnoremap <silent> <C-a> @=Increment()<cr>
+
+The effect is to execute the `Increment()` function in the expression register,
+which as we saw increases the next number ignoring leading minuses and returns
+the empty string -- leaving nothing to do the `@` command, since the job is
+already done.
+
+At first glance, this might just look like a fancy alternative to
+`:call Increment()<cr>`, but there's a nice bonus to it: our mapping now accepts
+a _count_, so that we can type `3<C-a>` to add three to the next number.
 
 ### feedkeys()
 
-...
+The built-in `feedkeys()` function inserts keys into the internal Vim buffer
+containing all keys left to execute, either typed by the user or coming from
+mappings. This can sound confusing and low-level, but it is a very useful tool.
 
-## Use Cases
+    nnoremap <silent> <C-g> :call feedkeys(nr2char(getchar()),'nt')<cr>
 
-### Lazy loading of a group of mappings
+This mapping executes the next key hit after `<C-g>` ignoring any mapping for
+that key -- a kind of "just-once-noremap". `getchar()` is first executed: it
+waits for the user to hit a key, and returns its keycode. `nr2char()` converts
+that keycode into a character, and `feedkeys()` puts that key into the Vim
+internal buffer; the 'nt' options says not to use mappings, and process the key
+as though the user typed it. Even though it remaps the useful `<C-g>` built-in,
+it also makes it available for free on `<C-g><C-g>`.
 
-### Another use case?
+Here's a longer example, inspired from igemnace on #vim:
+
+    function! QuickBuffer(pattern) abort
+      if empty(a:pattern)
+        call feedkeys(":B \<C-d>")
+        return
+      elseif a:pattern is '*'
+        call feedkeys(":ls!\<cr>:B ")
+        return
+      elseif a:pattern =~ '^\d\+$'
+        execute 'buffer' a:pattern
+        return
+      endif
+      let l:globbed = '*' . join(split(a:pattern, ' '), '*') . '*'
+      try
+        execute 'buffer' l:globbed
+      catch
+        call feedkeys(':B ' . l:globbed . "\<C-d>\<C-u>B " . a:pattern)
+      endtry
+    endfun
+
+    command! -nargs=* -complete=buffer B call QuickBuffer(<q-args>)
+
+    nnoremap <Leader>b :B<cr>
+
+Hitting `<Leader>b` will run the user-defined ex command `B`, which will in turn
+call the `QuickBuffer()` function. When the latter is called without argument,
+it will run `feedkeys(":B \<C-d>")`, with the effect of listing the completion
+options of the `B` command -- that is, showing the list of buffers, thanks to
+the `-complete=buffer` option of `B`. The `:B` is still on the command-line, so
+now the user can pick its choice by entering a part of the wanted buffer. All
+the conditionals of the `QuickBuffer()` function will be skipped, and the
+`buffer` ex command will be run on the typed argument with leading and trailing
+wildcards automatically added. If there is a single match, the buffer will be
+displayed and the function ends. If there is no match or more than one match,
+the choices will be shown and the `:B` will be put back on the commnd-line (in
+the 'catch' part of the function).
+
+The first `elseif` allows for `:B *` to show a full `:ls!` listing, with hidden
+buffers. The second `elseif` lets the user select a buffer by number, eg.
+`:B 2`, skipping all wildcards addition.
+
+
+## Use Case -- Lazy loading of a group of mappings
 
