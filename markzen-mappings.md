@@ -308,6 +308,7 @@ is not something that occurs very often. Also, note that the mechanism is a mere
 convenience: `<Leader>` is expanded in mapping commands, but not elsewhere. This
 does NOT echo a space:
 
+    " No expansion!
     :echo "\<Leader>"
 
 And if you show a mapping using Leader, you will see its expansion (`<Space>`):
@@ -402,7 +403,7 @@ surrounding the part after `<Plug>` in braces:
     nmap <silent> <LocalLeader>f <Plug>(MyPluginFor)
     nmap <Leader><Tab> <Plug>(MyPluginFori)
 
-In user's vimec:
+In user's vimrc:
 
     " Intent: call <Plug>MyPluginFor and hit 'i' to go into insert mode
     nmap <Leader>i <Plug>(MyPluginFor)i
