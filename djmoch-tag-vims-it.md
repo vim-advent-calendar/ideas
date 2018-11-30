@@ -144,6 +144,13 @@ someone else's configuration—will likely end up with an unmaintainable
 mess of a tool that doesn't work consistently, may not work at all, or
 works about as slow as the IDE you wanted to break free of.
 
+Real name: Daniel Moch
+Email: <daniel@danielmoch.com>
+GitHub account: [djmoch][github]
+Twitter handle: [@\_djmoch][twitter]
+IRC handle: djmoch
+Personal site: <https://www.danielmoch.com>
+
 [ic]: http://vimdoc.sourceforge.net/htmldoc/insert.html#ins-completion
 [ec]: http://ctags.sourceforge.net/
 [uc]: https://ctags.io/
@@ -154,3 +161,5 @@ works about as slow as the IDE you wanted to break free of.
 [mj]: https://git.danielmoch.com/vim-makejob.git
 [vcm]: https://github.com/ajh17/VimCompletesMe
 [oc]: http://vimdoc.sourceforge.net/htmldoc/options.html#'omnifunc'
+[github]: https://github.com/djmoch
+[twitter]: https://twitter.com/_djmoch
