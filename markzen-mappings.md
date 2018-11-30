@@ -673,3 +673,8 @@ Until then, merry xmaps to all!
 [ca]: http://vimhelp.appspot.com/change.txt.html#CTRL-A
 [fk]: http://vimhelp.appspot.com/eval.txt.html#feedkeys%28%29
 [bf]: http://vimhelp.appspot.com/windows.txt.html#%3Abuffer
+
+* Name: Markzen
+* Email: gh nick at proton mail
+* GitHub: fcpg
+
