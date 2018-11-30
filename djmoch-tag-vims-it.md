@@ -202,6 +202,13 @@ works about as slow as the IDE you wanted to break free of.
 - IRC handle: djmoch
 - Personal site: <https://www.danielmoch.com>
 
+## Meta: License
+
+This work is licensed under a [Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License][license].
+Permissions beyond the scope of this license may be available by
+contacting the author.
+
 [ic]: http://vimdoc.sourceforge.net/htmldoc/insert.html#ins-completion
 [ec]: http://ctags.sourceforge.net/
 [uc]: https://ctags.io/
@@ -218,3 +225,4 @@ works about as slow as the IDE you wanted to break free of.
 [co]: http://vimdoc.sourceforge.net/htmldoc/options.html#'complete'
 [to]: http://vimdoc.sourceforge.net/htmldoc/options.html#'tags'
 [ti]: http://vimdoc.sourceforge.net/htmldoc/usr_29.html#29.1
+[license]: https://creativecommons.org/licenses/by-nc-sa/4.0/
