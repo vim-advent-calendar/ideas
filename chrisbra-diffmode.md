@@ -212,3 +212,8 @@ be developed in the future.
 [8]: https://en.wikipedia.org/wiki/Diff#Unified_format
 [9]: https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
 [10]: https://github.com/vim/vim/releases/tag/v8.1.0397
+
+* Name: Christian Brabandt
+* Email: <cb@256bit.org>
+* GitHub: chrisbra
+* Picture: https://i.imgur.com/HjSMLD9.png
