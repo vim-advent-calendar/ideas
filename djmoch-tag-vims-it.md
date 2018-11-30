@@ -1,4 +1,4 @@
-# Tag, Vim's It
+# You Should Be Using Tags In Vim
 
 > I love you; you complete me.
 > - Dr. Evil
@@ -35,28 +35,61 @@ regarding completion and see what it takes to fully leverage it.
 ## Completion in Vim
 
 Completion in Vim is powerful, but not necessarily straightforward. Read
-[:h ins-completion][ic] and you'll see what I mean. Vim is smart enough
-to pull completion data from a variety of sources, but in turn expects
-users to know which source will provide the best answer and to invoke
-the correct keymap to draw the desired completions. It's not a huge
-hurdle in terms of a learning curve, but it's not as simple as hitting
-tab either.
+[`:h ins-completion`][ic] and you'll see what I mean.
 
-## Introduction to tags in Vim
+    Completion can be done for:
 
-One type of completion Vim offers is tag completion, which pulls from a
-special file called–appropriately—a tag file. Tag files are a
-collections of identifiers (e.g., function names) that are compiled into
-a single file along with references to their location in a source tree.
-Vim is capable a using a (properly formatted) tags file for a variety of
-use cases, among them navigating your source code a la Visual Studio and
+    1. Whole lines                                          |i_CTRL-X_CTRL-L|
+    2. keywords in the current file                         |i_CTRL-X_CTRL-N|
+    3. keywords in 'dictionary'                             |i_CTRL-X_CTRL-K|
+    4. keywords in 'thesaurus', thesaurus-style             |i_CTRL-X_CTRL-T|
+    5. keywords in the current and included files           |i_CTRL-X_CTRL-I|
+    6. tags                                                 |i_CTRL-X_CTRL-]|
+    7. file names                                           |i_CTRL-X_CTRL-F|
+    8. definitions or macros                                |i_CTRL-X_CTRL-D|
+    9. Vim command-line                                     |i_CTRL-X_CTRL-V|
+    10. User defined completion                             |i_CTRL-X_CTRL-U|
+    11. omni completion                                     |i_CTRL-X_CTRL-O|
+    12. Spelling suggestions                                |i_CTRL-X_s|
+    13. keywords in 'complete'                              |i_CTRL-N| |i_CTRL-P|
+
+Vim is smart enough to pull completion data from a variety of sources,
+but in turn expects users to know which source will provide the best
+answer and to invoke the correct keymap to draw the desired completions.
+It's not a huge hurdle in terms of a learning curve, but it's not as
+simple as hitting tab either.
+
+The first thing one should do when trying to learn Vim's completion
+system is to disable any completion plugins and learn these keymaps.
+Getting comfortable with them will also help you learn and remember
+where Vim can pull completion information from. You should also read [`:h
+'completefunc'`][cf] and [`:h 'complete'`][co] for more information on
+user-defined completion and the `complete` option.
+
+Now that we have a cursory understanding of completion in Vim, let's
+take a deeper look at tags and how they figure in to completion.
+
+## Introduction to `tags` in Vim
+
+One source of completion in Vim is tag completion, which pulls from a
+special file called–appropriately—a tag file. Tag files are collections
+of identifiers (e.g., function names) that are compiled into a single
+file along with references to their location in a source tree.  Vim is
+capable a using a (properly formatted) tags file for a variety of use
+cases, among them navigating your source code a la Visual Studio and
 completion.
 
-# Introduction to exuberant ctags
+By default Vim doesn't do anything with a tags file except read it. See
+[`:h 'tags'`][to] to learn how to configure where Vim looks for tags
+files. Vimdoc also contains a very good [introduction][ti] to tags more
+generally, so I won't spend any more space here introducing them. Let's
+move on and take a look at how we generate tags files.
 
-Tags files solve the problem of navigating a completing code in a given
-project, but they also create a problem: How do we create the tags file,
-and how do we keep it up-to-date? It would be a pain to manually
+## Introduction to `ctags`
+
+Tags files solve the problem of navigating and completing code in a
+given project, but they also create a problem: How do we create the tags
+file, and how do we keep it up-to-date? It would be a pain to manually
 maintain the tags file even for a small project; it would be all but
 impossible to do it for a large project like the Linux kernel. Luckily
 no one has to maintain a tags file. There are plenty of utilities to do
@@ -65,26 +98,36 @@ popular choice is called [Exuberant Ctags][ec], which has the virtue of
 being extendable via regular expressions placed into a `.ctags` file,
 but the drawback of not having been updated since 2009.  Another
 increasingly popular option is [Universal Ctags][uc], which functions as
-a drop-in replacement for Exuberant Ctags, but is very much actively
-maintained.  I've had good luck with both.
+a drop-in replacement for Exuberant Ctags and is actively maintained.
+I've had good luck with both.
 
-# Manually generating tags files
+Tags files and the tools that generate them have a long history
+alongside advanced text editors. The history-of-computing nerd in me
+likes knowing that I'm using the same tool programmers have used since
+the early days of BSD Unix. It's also a testament to how strong of a
+solution they provide that folks are still using them 40 years later.
+
+## Generating `tags` Files
+
+### Manually
 
 When we speak of manually generating tags files, we're talking about
 using any one of the aforementioned tags utilities to generate the tags
 file. If you're the type of person who takes pleasure in at least
 understanding how to do things from the command line, you should consult
-the manual page for your selected tags utility.
+the manual page for your selected tags utility. Take special note of the
+flags necessary to recurse through all of the subdirectories if you want
+to generate a tags file for an entire project in one shot.
 
-# Automatically generating tags files (git hooks, plugins, etc.)
+### Automatically
 
-Sure, you can always use your ctags utility of generate your tags files
-from the command line, but that's a heck of a lot of back and forth
-between your text editor and your shell, and I doubt anyone who tries to
-do that will enjoy the experience for long. So let's generate them
-automatically.
+You can always use your ctags utility of generate your tags files from
+the command line, but that's a heck of a lot of back and forth between
+your text editor and your shell, and I doubt anyone who tries to do that
+will enjoy the experience for long. So let's look at ways to generate
+them automatically.
 
-If you only every see yourself using tags files with Vim, then maybe a
+If you only ever see yourself using tags files with Vim, then maybe a
 plugin will interest you. I used [Gutentags][gt] for a long time, and
 found it "just works" as advertised. It has sane defaults, but lots of
 opportunities to customize its behavior, which you'll see if you visit
@@ -111,28 +154,34 @@ Of course the shell-script approach is infinitely configurable, so you
 can ultimately place the tags file wherever you want. One could also
 tailor this for other distributed SCM tools (e.g., Mercurial).
 
-# Tag completion (or, why you don't need jedi plugins)
+## Tying It All Together
 
 That brings us back to where we started, to the issue of code completion
 in Vim. Yes, Vim does offer native code completion (completing from tags
 is done with `C-x, C-]` in insert mode). No, it's probably not as
 powerful as what you could get with something like a Jedi plugin a la
 YouCompleteMe, but I've found it satisfies my needs more often than not,
-with `:grep` (or my own [`:GrepJob`][mj]) filling the gap nicely.
+with `:grep` (or my own [`:GrepJob`][mj]) filling the gap nicely in a
+more native fashion.
 
 There's more you can do here too. For instance, if you find yourself
 instinctively reaching for the tab key in order to complete a word,
 there is [VimCompletesMe][vcm], which takes advantage of all of Vim's
 built-in completions through the clever use of an [omni completion
-function][oc]. It works, but user do give up some control over selecting
-what data source Vim uses for a particular completion.
+function][oc]. It works, but users do give up some control over selecting
+what data source Vim uses for a particular completion. I used this
+plugin for a while after I gave up on YouCompleteMe, but ultimately
+removed it because it effectively made the TAB key ambiguous in insert
+mode. Sometimes I wanted to insert an actual TAB character, but got a
+completion instead.
 
-All of this raises the question of whether a language server is even
-necessary with Vim. I don't intend here to suggest an answer to that
-question, but I will say that many of the solutions to-date for language
-server integration in Vim have seemed like more trouble than they're
-worth. That said, with the advent of Vim 8 and its asynchronous
-capabilities, there is headroom for these solutions to improve.
+With all of this in place, it's natural to ask whether a language server
+is even necessary with Vim. I don't intend here to suggest an answer to
+that question, but I will say that many of the solutions to-date for
+language server integration in Vim have seemed like more trouble than
+they're worth. That said, with the advent of Vim 8 and its asynchronous
+capabilities, there is headroom for these solutions to improve, and I
+expect the best among them to become more compelling in the near future.
 
 I do not recommend Vim because it can be your IDE in the terminal. That
 said, Vim is a very powerful tool and if you invest the time to learn
@@ -144,12 +193,14 @@ someone else's configuration—will likely end up with an unmaintainable
 mess of a tool that doesn't work consistently, may not work at all, or
 works about as slow as the IDE you wanted to break free of.
 
-Real name: Daniel Moch
-Email: <daniel@danielmoch.com>
-GitHub account: [djmoch][github]
-Twitter handle: [@\_djmoch][twitter]
-IRC handle: djmoch
-Personal site: <https://www.danielmoch.com>
+## Meta: Contact Information
+
+- Real name: Daniel Moch
+- Email: <daniel@danielmoch.com>
+- GitHub account: [djmoch][github]
+- Twitter handle: [@\_djmoch][twitter]
+- IRC handle: djmoch
+- Personal site: <https://www.danielmoch.com>
 
 [ic]: http://vimdoc.sourceforge.net/htmldoc/insert.html#ins-completion
 [ec]: http://ctags.sourceforge.net/
@@ -163,3 +214,7 @@ Personal site: <https://www.danielmoch.com>
 [oc]: http://vimdoc.sourceforge.net/htmldoc/options.html#'omnifunc'
 [github]: https://github.com/djmoch
 [twitter]: https://twitter.com/_djmoch
+[cf]: http://vimdoc.sourceforge.net/htmldoc/options.html#'completefunc'
+[co]: http://vimdoc.sourceforge.net/htmldoc/options.html#'complete'
+[to]: http://vimdoc.sourceforge.net/htmldoc/options.html#'tags'
+[ti]: http://vimdoc.sourceforge.net/htmldoc/usr_29.html#29.1
