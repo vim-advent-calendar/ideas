@@ -4,7 +4,7 @@
 
 What makes Vim so different from other editors is, arguably, its rich set of
 motion commands. Once you can move around with precision, you not only gain
-time, as you do n't need to reach for the mouse, but you can also turn pretty
+time, as you do not need to reach for the mouse, but you can also turn pretty
 much every modification into tiny "programs", either to accomplish ad hoc tasks
 via recorded macros, or to address more general cases, thanks to commands,
 functions--and mappings.
@@ -22,10 +22,10 @@ the beginning of next word; it's a piece of code every Vim user will understand,
 like an 'if' statement in C or in another programming language. Thus, in Vim the
 media (the key) is definitely the message (the function to execute).
 
-Obviously, since alphanumric keys are used to write "editing programs", there is
+Obviously, since alphanumeric keys are used to write "editing programs", there is
 a need to separate "programming mode" where the user hits `dw` to delete a word,
-from "insertion mode", where the user just want to type text and not execute
-programs. That's why Vim is a *modal editor*, contrary to, say, Emacs. Once you
+from "insertion mode", where the user just wants to type text and not execute
+programs. That is why Vim is a *modal editor*, contrary to, say, Emacs. Once you
 go the modal road, it makes sense to define [extra modes][em] for things like
 visual selection or the command-line. Again, mappings make it possible to
 automate tasks for each of these modes.
@@ -48,7 +48,7 @@ part--there are a few differences).
 
 ### Mad Maps Beyond Thousand Modes
 
-Each Vim mode has its own [mapping-definining commands][mc]:
+Each Vim mode has its own [mapping-defining commands][mc]:
 
 * `nmap` for normal mode
 * `imap` for insert mode
@@ -218,7 +218,7 @@ true or false depending on whether the pop-up menu is visible, and if it is then
 the expression evaluates to `<C-e>`, otherwise it evaluates to `<Esc>`. The
 result of that evaluation becomes the final RHS. 
 
-Here's another example:
+Here is another example:
 
     onoremap <expr> il ':<C-u>norm! `['.strpart(getregtype(), 0, 1).'`]<cr>'
 
@@ -232,12 +232,12 @@ form the final RHS.
 As for the rest of the mapping: the `<C-u>` clears the command-line, since in
 some circumstances Vim can fill it automatically with a line range, for instance
 if `:` is hit from visual mode, or if a count is given to it (either directly,
-or from a mapping, here if we hit something like `3il`). [`norm`][no] will
+or from a mapping, eg. if we hit something like `3il`). [`norm`][no] will
 execute normal mode commands, and the `!` says not to use mappings in those,
-like `noremap`. The `[` and `]` marks are automatically set on both ends of the
-last changed text, so the first backtick goes to one end, then the right visual
-mode is set by the `strpart(...)` part, and the second backtick goes to the
-other end of the changed text. Making a visual selection from an
+like `noremap`. The [`[` and `]`][bk] marks are automatically set on both ends
+of the last changed text, so the first backtick goes to one end, then the right
+visual mode is set by the `strpart(...)` part, and the second backtick goes to
+the other end of the changed text. Making a visual selection from an
 operator-pending mapping defines the object of the current command, eg. `y`, `c`
 or `d`.
 
@@ -246,7 +246,7 @@ or `d`.
 #### Better Get Used To These Bars, Kid
 
 Mapping-defining commands are standard Ex commands, so they can be separated by
-the `|` character. What do you think the following command will do?
+the [`|`][ba] character. What do you think the following command will do?
 
     nnoremap <F7> :echo "foo"|echo "bar"
 
@@ -270,13 +270,13 @@ or cancel.
 
 #### We Don't Need No True Control
 
-You can use literal control chars in your mappings, by hitting `<C-v>` followed
-by the control char in insert or command-line mode. For instance, pressing
-`<C-v>` then the tab key will insert a literal tab char (you can use `:set
-list'` to show them). However, it is not very convenient to work with literal
-control chars: the graphic representation can be confusing (eg. `^[` for the
-Escape key), and it can insert the terminal-dependent sequence of the control
-char, like `^[OP`, instead of the generic character (here, the F1 key).
+You can use literal control chars in your mappings, by hitting [`<C-v>`][cv]
+followed by the control char in insert or command-line mode. For instance,
+pressing `<C-v>` then the tab key will insert a literal tab char (you can use
+`:set list` to show them). However, it is not very convenient to work with
+literal control chars: the graphic representation can be confusing (eg. `^[` for
+the Escape key), and it can insert a terminal-dependent sequence, like `^[OP`,
+instead of the generic character (here, the F1 key).
 
 The best practice is to use the Vim notation like we did so far, eg. `<C-x>`, in
 five chars (`<` + `C` + `-` + `x` + `>`), for Control+x. All keys have a
@@ -361,7 +361,7 @@ vimrc:
 
     nmap <Leader><Tab> ]&MyPluginIndentLine
 
-Then, if you later modify the internal RHS part, your users wo not have to
+Then, if you later modify the internal RHS part, your users will not have to
 change anything. Note that all mappings except the one to the internal RHS are
 _not_ of the noremap family, since we do want all mappings to chain together;
 `nnoremap` in any of those would break the chain.
@@ -370,7 +370,7 @@ This setting would work, but there is a flaw: the intermediate LHS, namely
 `]&MyPluginIndentLine`, interfers with normal usage. We paid attention to use a
 leading sequence of `]&` that is not mapped by default, but the user might well
 have created a mapping on that very sequence--and now, each time they will hit
-`]&`, there will be a slight delay when Vim waits for the duration of the
+`]&`, there will be a slight delay while Vim waits for the duration of the
 timeout to see if it should run `]&` or `]&MyPluginIndentLine`.
 
 That is where `<Plug>` comes in handy: since it is not a sequence made from
@@ -446,9 +446,9 @@ Another example, from command-line mode:
 This will insert the last space-separated word from the last command-line, as 
 `<M-_>` in Bash.
 
-`<C-r>` can also insert text present under the current cursor, when followed by
-some control characters. Here is an example with `<C-r><C-f>`, which inserts the
-filename under the cursor:
+`<C-r>` can also insert text present under the current cursor position, when
+followed by some control characters. Here is an example with `<C-r><C-f>`, which
+inserts the filename under the cursor:
 
     nnoremap <silent> <Leader>gf :pedit <C-r><C-f><cr>
 
@@ -463,8 +463,8 @@ insert the current word. If a filename is not expected, you can always use
     nnoremap <silent> c<Tab> :let @/=expand('<cword>')<cr>cgn
 
 This mapping sets the last search pattern to the word under the cursor, and
-changes it with the `cgn` sequence--conveniently repeatable with `.` to apply
-the same replacement to some following occurrences.
+changes it with the `cgn` sequence--making the whole thing conveniently
+repeatable with `.` to apply the same replacement to some following occurrences.
 
 ### The Mushroom Register: @=
 
@@ -501,8 +501,8 @@ already done.
 At first glance, this might just look like a fancy alternative to `:call
 Increment()<cr>`. There is a nice bonus to it, though: our mapping now accepts a
 _count_, so that we can type `3<C-a>` to add three to the next number. This is
-not something we could do with the `:call` version, at least without adding more
-code to deal with the count.
+not something we could do with the `:call` version, at least not without adding
+more code to deal with the count.
 
 ### Feeding Frenzy
 
@@ -631,7 +631,7 @@ Here is the `FlatteryLoad()` function:
 
 It calls the autoloaded `flattery#SetPlugMaps()` and `flattery#SetUserMaps()`
 functions, which sets all the plugin mappings starting with `f` and `t` eg.
-`fa`, `fb`, `fu` etc. Then, it unmaps the initial "lazy-loader" mapppings (those
+`fa`, `fb`, `fu` etc. Then, it unmaps the initial "lazy-loader" mappings (those
 who called this very function) for all modes, as the loading has just been done.
 Finally, it returns a string containing a `<Plug>` mapping that will be
 processed as an RHS, since the mapping that called the `FlatteryLoad()` function
@@ -661,6 +661,9 @@ Until then, merry xmaps to all!
 [pe]: http://vimhelp.appspot.com/map.txt.html#popupmenu-keys
 [pv]: http://vimhelp.appspot.com/eval.txt.html#pumvisible%28%29
 [no]: http://vimhelp.appspot.com/various.txt.html#%3Anorm
+[bk]: http://vimhelp.appspot.com/motion.txt.html#%27%5B
+[ba]: http://vimhelp.appspot.com/cmdline.txt.html#%3Abar
+[cv]: http://vimhelp.appspot.com/insert.txt.html#i_CTRL-V
 [vn]: http://vimhelp.appspot.com/intro.txt.html#key-notation
 [cp]: http://vimhelp.appspot.com/options.txt.html#%27cpo%27
 [le]: http://vimhelp.appspot.com/map.txt.html#mapleader
