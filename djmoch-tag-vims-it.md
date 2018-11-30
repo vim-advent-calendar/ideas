@@ -1,43 +1,38 @@
 # Tag, Vim's It
 
-> A journey of a thousand miles begins with a single step.
-> - Lao-tzu
+> I love you; you complete me.
+> - Dr. Evil
 
-What first brought me to Vim was realizing that it could do a lot of
-the things I thought only an IDE could do. For my first three years of
-college I programmed C and C++ exclusively using Microsoft Visual
-Studio. I spent a summer as an intern using Emacs, but didn't have
-enough curiosity at the time to use it any differently from Notepad.exe.
-I spent that summer wishing I had automatic features for completion,
-indentation, and all the things that made me appreciate Visual Studio.
-How naive I was!
+I first came to Vim by recommendation. I was looking for a good Python
+IDE (at the time I was new to the language) and one recommendation was
+to use Vim with a variety of plugins added on top. That Vim could do a
+lot of the things I thought only an IDE could do came as a bit of a
+shock. I spent a summer as an intern using Emacs at a Unix terminal, but
+didn't have enough curiosity at the time to use it any differently from
+`notepad.exe`. I spent that summer wishing I had automatic features for
+completion, indentation, and all the things that made me appreciate
+the IDE's I used in college.  How naive I was!
 
-Early in my professional career I had use for a text editor that I could
-use in the terminal, and my coworkers used Vi. After getting used to its
-quirks, I came to enjoy how my hands could almost keep up with what my
-mind wanted to do. It's a natural step from Vi to Vim, but again, what
-really sunk it for me was my yearning for an IDE. When I was first
-playing with the Python programming language at home, I came across a
-post (I lost the link long ago) which claimed to be expert advice on how
-to configure Vim for optimal use for Python programming. The first
-plugin they recommended, YouCompleteMe.
+So how was I directed to achieve powerful programming completions in
+Vim? By the use of a plugin called YouCompleteMe. My experience with it
+was okay, at least to start with. It took a while to install and get
+working, but that didn't bother me at the time since I was just playing
+around with it at home and the stakes were low if it suddenly broke. I
+did notice it slowed Vim down. Like a lot. But that was mainly when it
+was starting up and I didn't know enough to find it frustrating.
+Probably the first thing that really bothered me about the plugin was
+that the embedded Jedi language server used more memory than Vim itself.
+The other recommended plugins were similarly laggy, and I eventually
+went in search of something better.
 
-I do not recommend Vim because it can be your IDE in the terminal. I
-realize this advice will seem quaint, but I've come to believe that the
-best way to leverage a tool as powerful as Vim is to make sure you're
-using it for all it's worth _before_ looking for a plugin to help you
-out. Anyone who (like me) jumps right to installing a bunch of
-plugins—whether in a spree of grabbing anything that looks interesting
-or just to copy someone else's configuration—will likely end up with an
-unmaintainable mess of a tool that doesn't work consistently, may not
-work at all, or works about as slow as the IDE you wanted to break
-free of. YouCompleteMe falls definitively into the latter category.
+What I found was Vim itself.
 
-So is there anything we can do to leverage Vim for all its worth, and to
-give us something like YouCompleteMe, without the bloat? Does Vim offer
-a built-in feature that gets us at least most of the way there?
+Did you know that Vim has built-in facilities for completions? It works
+admirably well out of the box too, but with a little bit of additional
+setup it can be great. Let's take a look at what Vim has on offer
+regarding completion and see what it takes to fully leverage it.
 
-# Completion in Vim
+## Completion in Vim
 
 Completion in Vim is powerful, but not necessarily straightforward. Read
 [:h ins-completion][ic] and you'll see what I mean. Vim is smart enough
@@ -47,7 +42,7 @@ the correct keymap to draw the desired completions. It's not a huge
 hurdle in terms of a learning curve, but it's not as simple as hitting
 tab either.
 
-# Introduction to tags in Vim
+## Introduction to tags in Vim
 
 One type of completion Vim offers is tag completion, which pulls from a
 special file called–appropriately—a tag file. Tag files are a
@@ -138,6 +133,16 @@ question, but I will say that many of the solutions to-date for language
 server integration in Vim have seemed like more trouble than they're
 worth. That said, with the advent of Vim 8 and its asynchronous
 capabilities, there is headroom for these solutions to improve.
+
+I do not recommend Vim because it can be your IDE in the terminal. That
+said, Vim is a very powerful tool and if you invest the time to learn
+how it works it will take you very far. In other words, use Vim for all
+it's worth _before_ looking for a plugin to help you out. Anyone who
+(like me) jumps right to installing a bunch of plugins—whether in a
+spree of grabbing anything that looks interesting or just to copy
+someone else's configuration—will likely end up with an unmaintainable
+mess of a tool that doesn't work consistently, may not work at all, or
+works about as slow as the IDE you wanted to break free of.
 
 [ic]: http://vimdoc.sourceforge.net/htmldoc/insert.html#ins-completion
 [ec]: http://ctags.sourceforge.net/
