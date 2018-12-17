@@ -20,16 +20,17 @@ Even if you are a newcomer to vim, you're likely familiar with the concept of a
 text object. In vimtutor, this concept is introduced pretty early on. Text
 objects are "commands that can only be used while in Visual mode or after an
 operator", as is explained in [:help text-objects][help-text-objects].
-Essentially, text objects are descriptors that tell an action what to operate
-on. They do this by creating a visual selection that the action then operates
-on.
+Essentially, text objects are descriptors that tell an operator what to operate
+on. If you think about an operator as a verb, then metaphorically, a text object
+is like a direct object, or what the verb is operating on. They do this by
+creating a visual selection that the operator then operates on.
 
 One of the most commonly-used examples is `iw`, which is short for or
 **inner-word**. If you type `diw`, for instance, this will delete the word under
-the cursor. `d` is the action: **delete**; `iw` is the text object:
-**inner-word**. We could easily change the action to `c` for **change**, or we
+the cursor. `d` is the operator: **delete**; `iw` is the text object:
+**inner-word**. We could easily change the operator to `c` for **change**, or we
 could even use [tpope's vim-surround plugin][vim-surround] in order to gain
-access to the `ys` action and do something like `ysiw"` to surround the
+access to the `ys` operator and do something like `ysiw"` to surround the
 **inner-word** with double-quotes. We could also change the text object to
 something like `aw` (short for **around-word**), which includes the
 **inner-word** as well as any surrounding whitespace.
@@ -93,26 +94,26 @@ limited options and vim maps quite a few of them already in visual mode.
 
 #### *inner-line* RHS: `:<c-u>normal! g_v^<cr>`
 
-The `:` begins command mode, and it operates as if you, the user, had typed `:`
-yourself. However, there is a gotcha. When `:` is pressed in visual mode, vim
-automatically puts the range, `'<,'>`, in the command-line because it assumes
-that you want to use the range for the command you're about to type. This leaves
-us with `:'<,'>` in total. Since the range, `'<,'>`, will interfere with our
-mapping, we can use `<c-u>` ([:help c_CTRL-U][help-c_ctrl-u]) to clear the
-command-line and restore it from `:'<,'>` to just `:`.
+The `:` begins command-line mode, and it operates as if you, the user, had typed
+`:` yourself. However, there is a gotcha. When `:` is pressed in visual mode,
+vim automatically puts the range, `'<,'>`, in the command-line because it
+assumes that you want to use the range for the command you're about to type.
+This leaves us with `:'<,'>` in total. Since the range, `'<,'>`, will interfere
+with our mapping, we can use `<c-u>` ([:help c_CTRL-U][help-c_ctrl-u]) to clear
+the command-line and restore it from `:'<,'>` to just `:`.
 
-Then we start the actual command we want to execute: `:normal! g_v^`.
+Then, we start the actual command we want to execute: `:normal! g_v^`.
 Essentially, this command moves to the last non-whitespace character on the line
 with `g_`, then enters visual mode with `v`, and finally moves to the first
 non-whitespace character on the line with `^`. To read more about `:normal`,
-check out This ca [:help :normal][help-normal], and of course, if you're not
-familiar with the motions or visual mode check out [:help g\_][help-g-under], [:help
+check out [:help :normal][help-normal], and of course, if you're not familiar
+with the motions or visual mode check out [:help g\_][help-g-under], [:help
 ^][help-hat], and [:help visual-mode][help-visual-mode].
 
 #### All Together
 
 What have we achieved? We have created a simple mapping such that when we press
-`il` in visual mode or after an action, vim will visually select or operate on
+`il` in visual mode or after an operator, vim will visually select or operate on
 (respectively) the **inner line**. For example, `vil` will select from the first
 non-whitespace character until the last non-whitespace character. Also, `cil`
 will *change* what the visual selection would have selected. As a final example,
@@ -142,16 +143,16 @@ character) as well as replace `^` with `0` (instead of going to the soft start
 of the line, go to the beginning of the line). The relevant motions are [:help
 $][help-dollar] and [:help 0][help-0].
 
-Now we can do things like `"+yal` to yank the line (without the newline the end)
-into the system clipboard. Or we can use `val` to select the current line sans
-the newline at the end.
+Now we can do things like `"+yal` to yank the line (without the newline at the
+end) into the system clipboard. Or we can use `val` to select the current line
+sans the newline at the end.
 
 #### Text Object *inner-document*
 
 Suppose we wanted to make a text object that selected the entire document we're
 currently working in, since it might be annoying to have to use something like
-`ggcG`--or, [more philosophically][ggvgc], `ggVGc`. Well, we know that we can
-describe this action with a text object and give it a name, so let's do just
+`ggcG`--or, [more philosophically, `ggVGc`][ggvgc]. Well, we know that we can
+describe this operator with a text object and give it a name, so let's do just
 that for `id`, or **inner-document**.
 
 How do we achieve this? We know that we will need to move to the end of the
@@ -292,11 +293,10 @@ onoremap <silent> an :<c-u>call <sid>aroundNumber()<cr>
 
 #### Brief analysis of **in-number** and **around-number**
 
-These text objects have served me very well when editing code. Especially when
-it comes to editing css, which has a lot of things like `left: 10px;`, it can be
-especially useful to change the next number on the line. I must use `cin` at
-least a handful of times per day, but I probably use it closer to hundreds of
-times.
+These text objects have served me very well when editing code. When it comes to
+editing css, in particular, which has a lot of things like `left: 10px;`, it can
+be useful to change the next number on the line. I must use `cin` at least a
+handful of times each day, but I probably use it closer to hundreds of times.
 
 I won't go too in-depth, but essentially the function figures out if there is a
 number on the line that matches a binary, hex, or decimal regex, and if there is
@@ -474,12 +474,12 @@ comments are helpful.
 
 ## Conclusion
 
-If you find yourself typing a motion followed by an action and another motion,
-then maybe you want to create a quick text object that can save some time. It
-also might be valuable to create some text objects that can save some time, such
-as selecting a number or an indentation level. It's simply so neat that vim is
-able to provide such an intricate and powerful way to describe how to manipulate
-text. Indeed, that is its primary objective, and it does a damn good job at it.
+If you find yourself typing a motion followed by an operator and another motion,
+then maybe you want to create a quick text object. It might be valuable to
+create such text objects that can save some time, such as selecting a number or
+an indentation level. It's simply so neat that vim is able to provide such an
+intricate and powerful way to describe how to manipulate text. Indeed, that is
+its primary objective, and it does a damn good job at it.
 
 Also, if you want, you are welcome to copy the code snippets above--there is no
 license on them. Good luck vimming. Try to stay productive but also curious and
